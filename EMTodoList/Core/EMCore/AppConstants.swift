@@ -8,5 +8,7 @@
 import Foundation
 
 public struct AppConstants {
-    static let todoApiUrlStr = "https://dummyjson.com/todos"
+    public static let todoCoreDataModel = "ToDoModel"
+    
+    public static let todoApiUrlStr = "https://dummyjson.com/todos"
 }

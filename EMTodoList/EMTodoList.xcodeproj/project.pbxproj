@@ -17,6 +17,21 @@
 		D7277FB52CF78B5400AE853A /* NetworkingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FB42CF78B5400AE853A /* NetworkingServiceProtocol.swift */; };
 		D7277FB72CF78B9600AE853A /* NetworkingServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FB62CF78B9600AE853A /* NetworkingServiceError.swift */; };
 		D7277FB92CF78BD600AE853A /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FB82CF78BD600AE853A /* NetworkingService.swift */; };
+		D7277FBC2CF7905A00AE853A /* ToDoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7277FBA2CF7905A00AE853A /* ToDoModel.xcdatamodeld */; };
+		D7277FC42CF7919F00AE853A /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FC32CF7919F00AE853A /* CoreDataStack.swift */; };
+		D7277FCC2CF7925D00AE853A /* TaskCoreDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FC82CF7922200AE853A /* TaskCoreDataEntity.swift */; };
+		D7277FCE2CF79E5200AE853A /* CoreDataStackOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FCD2CF79E5200AE853A /* CoreDataStackOperationError.swift */; };
+		D7277FCF2CF79E7900AE853A /* libEMCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277F8C2CF76FB100AE853A /* libEMCore.a */; };
+		D7277FD12CF79ED400AE853A /* CoreDataStackOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FD02CF79ED400AE853A /* CoreDataStackOperation.swift */; };
+		D7277FD42CF79F3B00AE853A /* CoreDataDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FD32CF79F3B00AE853A /* CoreDataDatabase.swift */; };
+		D7277FD62CF79F7000AE853A /* EnumProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FD52CF79F7000AE853A /* EnumProtocol.swift */; };
+		D7277FD82CF7A1BB00AE853A /* OperationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FD72CF7A1BB00AE853A /* OperationProtocol.swift */; };
+		D7277FDB2CF7A33400AE853A /* EMTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FDA2CF7A33400AE853A /* EMTask.swift */; };
+		D7277FDE2CF7ADB400AE853A /* Logger.Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FDD2CF7ADB400AE853A /* Logger.Extensions.swift */; };
+		D7277FE02CF7AE8C00AE853A /* ManagerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FDF2CF7AE8C00AE853A /* ManagerProvider.swift */; };
+		D7277FE32CF7AECE00AE853A /* libEMCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277F8C2CF76FB100AE853A /* libEMCore.a */; };
+		D7277FE42CF7AECE00AE853A /* libEMCoreDataStack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277FC12CF7919E00AE853A /* libEMCoreDataStack.a */; };
+		D7277FE52CF7AECE00AE853A /* libEMNetworkingService.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277FA32CF7732D00AE853A /* libEMNetworkingService.a */; };
 		D77390F92CF6501C00795469 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390F82CF6501C00795469 /* AppDelegate.swift */; };
 		D77390FB2CF6501C00795469 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390FA2CF6501C00795469 /* SceneDelegate.swift */; };
 		D77390FD2CF6501C00795469 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390FC2CF6501C00795469 /* ViewController.swift */; };
@@ -63,6 +78,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D7277FBF2CF7919E00AE853A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +101,18 @@
 		D7277FB42CF78B5400AE853A /* NetworkingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingServiceProtocol.swift; sourceTree = "<group>"; };
 		D7277FB62CF78B9600AE853A /* NetworkingServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingServiceError.swift; sourceTree = "<group>"; };
 		D7277FB82CF78BD600AE853A /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		D7277FBB2CF7905A00AE853A /* ToDoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoModel.xcdatamodel; sourceTree = "<group>"; };
+		D7277FC12CF7919E00AE853A /* libEMCoreDataStack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEMCoreDataStack.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7277FC32CF7919F00AE853A /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		D7277FC82CF7922200AE853A /* TaskCoreDataEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCoreDataEntity.swift; sourceTree = "<group>"; };
+		D7277FCD2CF79E5200AE853A /* CoreDataStackOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackOperationError.swift; sourceTree = "<group>"; };
+		D7277FD02CF79ED400AE853A /* CoreDataStackOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackOperation.swift; sourceTree = "<group>"; };
+		D7277FD32CF79F3B00AE853A /* CoreDataDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDatabase.swift; sourceTree = "<group>"; };
+		D7277FD52CF79F7000AE853A /* EnumProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumProtocol.swift; sourceTree = "<group>"; };
+		D7277FD72CF7A1BB00AE853A /* OperationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationProtocol.swift; sourceTree = "<group>"; };
+		D7277FDA2CF7A33400AE853A /* EMTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMTask.swift; sourceTree = "<group>"; };
+		D7277FDD2CF7ADB400AE853A /* Logger.Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.Extensions.swift; sourceTree = "<group>"; };
+		D7277FDF2CF7AE8C00AE853A /* ManagerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerProvider.swift; sourceTree = "<group>"; };
 		D77390F52CF6501C00795469 /* EMTodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMTodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D77390F82CF6501C00795469 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D77390FA2CF6501C00795469 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,10 +143,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D7277FBE2CF7919E00AE853A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7277FCF2CF79E7900AE853A /* libEMCore.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D77390F22CF6501C00795469 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7277FE32CF7AECE00AE853A /* libEMCore.a in Frameworks */,
+				D7277FE42CF7AECE00AE853A /* libEMCoreDataStack.a in Frameworks */,
+				D7277FE52CF7AECE00AE853A /* libEMNetworkingService.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,8 +189,12 @@
 		D7277F8D2CF76FB100AE853A /* EMCore */ = {
 			isa = PBXGroup;
 			children = (
+				D7277FDC2CF7AD9C00AE853A /* Extensions */,
+				D7277FD92CF7A32600AE853A /* Entities */,
 				D7277F9D2CF772EC00AE853A /* AppConstants.swift */,
 				D7277F932CF76FD800AE853A /* AppErrorProtocol.swift */,
+				D7277FD52CF79F7000AE853A /* EnumProtocol.swift */,
+				D7277FD72CF7A1BB00AE853A /* OperationProtocol.swift */,
 			);
 			path = EMCore;
 			sourceTree = "<group>";
@@ -162,6 +213,7 @@
 		D7277FAA2CF7733300AE853A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D7277FC22CF7919F00AE853A /* EMCoreDataStack */,
 				D7277FA42CF7732D00AE853A /* EMNetworkingService */,
 			);
 			path = Services;
@@ -185,14 +237,51 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		D7277FC22CF7919F00AE853A /* EMCoreDataStack */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FD22CF79F3300AE853A /* Base */,
+				D7277FC32CF7919F00AE853A /* CoreDataStack.swift */,
+				D7277FD02CF79ED400AE853A /* CoreDataStackOperation.swift */,
+				D7277FCD2CF79E5200AE853A /* CoreDataStackOperationError.swift */,
+			);
+			path = EMCoreDataStack;
+			sourceTree = "<group>";
+		};
+		D7277FD22CF79F3300AE853A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FD32CF79F3B00AE853A /* CoreDataDatabase.swift */,
+				D7277FC82CF7922200AE853A /* TaskCoreDataEntity.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		D7277FD92CF7A32600AE853A /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FDA2CF7A33400AE853A /* EMTask.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		D7277FDC2CF7AD9C00AE853A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FDD2CF7ADB400AE853A /* Logger.Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		D77390EC2CF6501C00795469 = {
 			isa = PBXGroup;
 			children = (
-				D7277FAA2CF7733300AE853A /* Services */,
-				D7277F872CF76F8300AE853A /* Core */,
+				D7277FBA2CF7905A00AE853A /* ToDoModel.xcdatamodeld */,
 				D77390F72CF6501C00795469 /* EMTodoList */,
 				D773910E2CF6502600795469 /* EMTodoListTests */,
 				D77391182CF6502600795469 /* EMTodoListUITests */,
+				D7277FAA2CF7733300AE853A /* Services */,
+				D7277F872CF76F8300AE853A /* Core */,
 				D77390F62CF6501C00795469 /* Products */,
 				D7277FB02CF7738B00AE853A /* Frameworks */,
 			);
@@ -206,6 +295,7 @@
 				D77391152CF6502600795469 /* EMTodoListUITests.xctest */,
 				D7277F8C2CF76FB100AE853A /* libEMCore.a */,
 				D7277FA32CF7732D00AE853A /* libEMNetworkingService.a */,
+				D7277FC12CF7919E00AE853A /* libEMCoreDataStack.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -219,6 +309,7 @@
 				D77391012CF6502500795469 /* Assets.xcassets */,
 				D77391032CF6502500795469 /* LaunchScreen.storyboard */,
 				D77391062CF6502500795469 /* Info.plist */,
+				D7277FDF2CF7AE8C00AE853A /* ManagerProvider.swift */,
 			);
 			path = EMTodoList;
 			sourceTree = "<group>";
@@ -275,6 +366,23 @@
 			name = EMNetworkingService;
 			productName = EMNetworkingService;
 			productReference = D7277FA32CF7732D00AE853A /* libEMNetworkingService.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D7277FC02CF7919E00AE853A /* EMCoreDataStack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7277FC52CF7919F00AE853A /* Build configuration list for PBXNativeTarget "EMCoreDataStack" */;
+			buildPhases = (
+				D7277FBD2CF7919E00AE853A /* Sources */,
+				D7277FBE2CF7919E00AE853A /* Frameworks */,
+				D7277FBF2CF7919E00AE853A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EMCoreDataStack;
+			productName = EMCoreDataStack;
+			productReference = D7277FC12CF7919E00AE853A /* libEMCoreDataStack.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D77390F42CF6501C00795469 /* EMTodoList */ = {
@@ -346,6 +454,9 @@
 					D7277FA22CF7732D00AE853A = {
 						CreatedOnToolsVersion = 15.2;
 					};
+					D7277FC02CF7919E00AE853A = {
+						CreatedOnToolsVersion = 15.2;
+					};
 					D77390F42CF6501C00795469 = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -377,6 +488,7 @@
 				D77391142CF6502600795469 /* EMTodoListUITests */,
 				D7277F8B2CF76FB100AE853A /* EMCore */,
 				D7277FA22CF7732D00AE853A /* EMNetworkingService */,
+				D7277FC02CF7919E00AE853A /* EMCoreDataStack */,
 			);
 		};
 /* End PBXProject section */
@@ -412,7 +524,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7277FDE2CF7ADB400AE853A /* Logger.Extensions.swift in Sources */,
 				D7277F9E2CF772EC00AE853A /* AppConstants.swift in Sources */,
+				D7277FD82CF7A1BB00AE853A /* OperationProtocol.swift in Sources */,
+				D7277FDB2CF7A33400AE853A /* EMTask.swift in Sources */,
+				D7277FD62CF79F7000AE853A /* EnumProtocol.swift in Sources */,
 				D7277F942CF76FD800AE853A /* AppErrorProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,8 +542,21 @@
 				D7277FAB2CF7734300AE853A /* RequestMethod.swift in Sources */,
 				D7277FB52CF78B5400AE853A /* NetworkingServiceProtocol.swift in Sources */,
 				D7277FB72CF78B9600AE853A /* NetworkingServiceError.swift in Sources */,
+				D7277FBC2CF7905A00AE853A /* ToDoModel.xcdatamodeld in Sources */,
 				D7277FB92CF78BD600AE853A /* NetworkingService.swift in Sources */,
 				D7277FAD2CF7734300AE853A /* Endpoint.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7277FBD2CF7919E00AE853A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7277FCC2CF7925D00AE853A /* TaskCoreDataEntity.swift in Sources */,
+				D7277FD12CF79ED400AE853A /* CoreDataStackOperation.swift in Sources */,
+				D7277FCE2CF79E5200AE853A /* CoreDataStackOperationError.swift in Sources */,
+				D7277FC42CF7919F00AE853A /* CoreDataStack.swift in Sources */,
+				D7277FD42CF79F3B00AE853A /* CoreDataDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +566,7 @@
 			files = (
 				D77390FD2CF6501C00795469 /* ViewController.swift in Sources */,
 				D77390F92CF6501C00795469 /* AppDelegate.swift in Sources */,
+				D7277FE02CF7AE8C00AE853A /* ManagerProvider.swift in Sources */,
 				D77390FB2CF6501C00795469 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,6 +658,34 @@
 			name = Debug;
 		};
 		D7277FA92CF7732D00AE853A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8FA6F58X42;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D7277FC62CF7919F00AE853A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8FA6F58X42;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7277FC72CF7919F00AE853A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -821,6 +979,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D7277FC52CF7919F00AE853A /* Build configuration list for PBXNativeTarget "EMCoreDataStack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7277FC62CF7919F00AE853A /* Debug */,
+				D7277FC72CF7919F00AE853A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D77390F02CF6501C00795469 /* Build configuration list for PBXProject "EMTodoList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -858,6 +1025,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D7277FBA2CF7905A00AE853A /* ToDoModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D7277FBB2CF7905A00AE853A /* ToDoModel.xcdatamodel */,
+			);
+			currentVersion = D7277FBB2CF7905A00AE853A /* ToDoModel.xcdatamodel */;
+			path = ToDoModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D77390ED2CF6501C00795469 /* Project object */;
 }

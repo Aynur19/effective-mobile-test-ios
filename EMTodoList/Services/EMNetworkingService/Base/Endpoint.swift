@@ -26,10 +26,7 @@ public struct Endpoint: EndpointProtocol {
         method: RequestMethod = .post,
         parameters: [String:String]? = nil
     ) -> EndpointProtocol? {
-        guard var components = URLComponents(string: urlString),
-              let scheme = components.scheme,
-              let host = components.host
-        else { return nil }
+        guard var components = URLComponents(string: urlString) else { return nil }
 
         if let parameters = parameters {
             components.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }

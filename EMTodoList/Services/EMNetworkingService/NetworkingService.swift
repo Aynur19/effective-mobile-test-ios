@@ -129,7 +129,7 @@ extension NetworkingService: NetworkingServiceProtocol {
         type: T.Type
     ) async -> Result<T, NetworkingServiceError> {
         do {
-            let (data, response) = try await session.data(from: url)
+            let (data, _) = try await session.data(from: url)
             let result = try JSONDecoder().decode(T.self, from: data)
             return .success(result)
         } catch let error as URLError {

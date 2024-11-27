@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D7277F942CF76FD800AE853A /* AppErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277F932CF76FD800AE853A /* AppErrorProtocol.swift */; };
+		D7277F9E2CF772EC00AE853A /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277F9D2CF772EC00AE853A /* AppConstants.swift */; };
+		D7277FAB2CF7734300AE853A /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277F992CF770C500AE853A /* RequestMethod.swift */; };
+		D7277FAC2CF7734300AE853A /* RequestConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277F9B2CF770D800AE853A /* RequestConfiguration.swift */; };
+		D7277FAD2CF7734300AE853A /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277F972CF7709800AE853A /* Endpoint.swift */; };
+		D7277FB12CF7738B00AE853A /* libEMCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277F8C2CF76FB100AE853A /* libEMCore.a */; };
+		D7277FB22CF773B000AE853A /* NetworkResponseErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FAE2CF7736600AE853A /* NetworkResponseErrorProtocol.swift */; };
+		D7277FB52CF78B5400AE853A /* NetworkingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FB42CF78B5400AE853A /* NetworkingServiceProtocol.swift */; };
+		D7277FB72CF78B9600AE853A /* NetworkingServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FB62CF78B9600AE853A /* NetworkingServiceError.swift */; };
+		D7277FB92CF78BD600AE853A /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FB82CF78BD600AE853A /* NetworkingService.swift */; };
 		D77390F92CF6501C00795469 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390F82CF6501C00795469 /* AppDelegate.swift */; };
 		D77390FB2CF6501C00795469 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390FA2CF6501C00795469 /* SceneDelegate.swift */; };
 		D77390FD2CF6501C00795469 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390FC2CF6501C00795469 /* ViewController.swift */; };
@@ -34,7 +44,39 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D7277F8A2CF76FB100AE853A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7277FA12CF7732D00AE853A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		D7277F8C2CF76FB100AE853A /* libEMCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEMCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7277F932CF76FD800AE853A /* AppErrorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrorProtocol.swift; sourceTree = "<group>"; };
+		D7277F972CF7709800AE853A /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		D7277F992CF770C500AE853A /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
+		D7277F9B2CF770D800AE853A /* RequestConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConfiguration.swift; sourceTree = "<group>"; };
+		D7277F9D2CF772EC00AE853A /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		D7277FA32CF7732D00AE853A /* libEMNetworkingService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEMNetworkingService.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7277FAE2CF7736600AE853A /* NetworkResponseErrorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponseErrorProtocol.swift; sourceTree = "<group>"; };
+		D7277FB42CF78B5400AE853A /* NetworkingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingServiceProtocol.swift; sourceTree = "<group>"; };
+		D7277FB62CF78B9600AE853A /* NetworkingServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingServiceError.swift; sourceTree = "<group>"; };
+		D7277FB82CF78BD600AE853A /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		D77390F52CF6501C00795469 /* EMTodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMTodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D77390F82CF6501C00795469 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D77390FA2CF6501C00795469 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +92,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D7277F892CF76FB100AE853A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7277FA02CF7732D00AE853A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7277FB12CF7738B00AE853A /* libEMCore.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D77390F22CF6501C00795469 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -74,13 +131,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D7277F872CF76F8300AE853A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D7277F8D2CF76FB100AE853A /* EMCore */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D7277F8D2CF76FB100AE853A /* EMCore */ = {
+			isa = PBXGroup;
+			children = (
+				D7277F9D2CF772EC00AE853A /* AppConstants.swift */,
+				D7277F932CF76FD800AE853A /* AppErrorProtocol.swift */,
+			);
+			path = EMCore;
+			sourceTree = "<group>";
+		};
+		D7277FA42CF7732D00AE853A /* EMNetworkingService */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FB32CF78B1500AE853A /* Base */,
+				D7277FB42CF78B5400AE853A /* NetworkingServiceProtocol.swift */,
+				D7277FB82CF78BD600AE853A /* NetworkingService.swift */,
+				D7277FB62CF78B9600AE853A /* NetworkingServiceError.swift */,
+			);
+			path = EMNetworkingService;
+			sourceTree = "<group>";
+		};
+		D7277FAA2CF7733300AE853A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FA42CF7732D00AE853A /* EMNetworkingService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D7277FB02CF7738B00AE853A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7277FB32CF78B1500AE853A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FAE2CF7736600AE853A /* NetworkResponseErrorProtocol.swift */,
+				D7277F972CF7709800AE853A /* Endpoint.swift */,
+				D7277F992CF770C500AE853A /* RequestMethod.swift */,
+				D7277F9B2CF770D800AE853A /* RequestConfiguration.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		D77390EC2CF6501C00795469 = {
 			isa = PBXGroup;
 			children = (
+				D7277FAA2CF7733300AE853A /* Services */,
+				D7277F872CF76F8300AE853A /* Core */,
 				D77390F72CF6501C00795469 /* EMTodoList */,
 				D773910E2CF6502600795469 /* EMTodoListTests */,
 				D77391182CF6502600795469 /* EMTodoListUITests */,
 				D77390F62CF6501C00795469 /* Products */,
+				D7277FB02CF7738B00AE853A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +204,8 @@
 				D77390F52CF6501C00795469 /* EMTodoList.app */,
 				D773910B2CF6502600795469 /* EMTodoListTests.xctest */,
 				D77391152CF6502600795469 /* EMTodoListUITests.xctest */,
+				D7277F8C2CF76FB100AE853A /* libEMCore.a */,
+				D7277FA32CF7732D00AE853A /* libEMNetworkingService.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +243,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D7277F8B2CF76FB100AE853A /* EMCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7277F902CF76FB100AE853A /* Build configuration list for PBXNativeTarget "EMCore" */;
+			buildPhases = (
+				D7277F882CF76FB100AE853A /* Sources */,
+				D7277F892CF76FB100AE853A /* Frameworks */,
+				D7277F8A2CF76FB100AE853A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EMCore;
+			productName = EMCore;
+			productReference = D7277F8C2CF76FB100AE853A /* libEMCore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D7277FA22CF7732D00AE853A /* EMNetworkingService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7277FA72CF7732D00AE853A /* Build configuration list for PBXNativeTarget "EMNetworkingService" */;
+			buildPhases = (
+				D7277F9F2CF7732D00AE853A /* Sources */,
+				D7277FA02CF7732D00AE853A /* Frameworks */,
+				D7277FA12CF7732D00AE853A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EMNetworkingService;
+			productName = EMNetworkingService;
+			productReference = D7277FA32CF7732D00AE853A /* libEMNetworkingService.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		D77390F42CF6501C00795469 /* EMTodoList */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D773911F2CF6502600795469 /* Build configuration list for PBXNativeTarget "EMTodoList" */;
@@ -190,6 +340,12 @@
 				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					D7277F8B2CF76FB100AE853A = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					D7277FA22CF7732D00AE853A = {
+						CreatedOnToolsVersion = 15.2;
+					};
 					D77390F42CF6501C00795469 = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -219,6 +375,8 @@
 				D77390F42CF6501C00795469 /* EMTodoList */,
 				D773910A2CF6502600795469 /* EMTodoListTests */,
 				D77391142CF6502600795469 /* EMTodoListUITests */,
+				D7277F8B2CF76FB100AE853A /* EMCore */,
+				D7277FA22CF7732D00AE853A /* EMNetworkingService */,
 			);
 		};
 /* End PBXProject section */
@@ -250,6 +408,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D7277F882CF76FB100AE853A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7277F9E2CF772EC00AE853A /* AppConstants.swift in Sources */,
+				D7277F942CF76FD800AE853A /* AppErrorProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7277F9F2CF7732D00AE853A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7277FB22CF773B000AE853A /* NetworkResponseErrorProtocol.swift in Sources */,
+				D7277FAC2CF7734300AE853A /* RequestConfiguration.swift in Sources */,
+				D7277FAB2CF7734300AE853A /* RequestMethod.swift in Sources */,
+				D7277FB52CF78B5400AE853A /* NetworkingServiceProtocol.swift in Sources */,
+				D7277FB72CF78B9600AE853A /* NetworkingServiceError.swift in Sources */,
+				D7277FB92CF78BD600AE853A /* NetworkingService.swift in Sources */,
+				D7277FAD2CF7734300AE853A /* Endpoint.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D77390F12CF6501C00795469 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -304,6 +485,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D7277F912CF76FB100AE853A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8FA6F58X42;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7277F922CF76FB100AE853A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8FA6F58X42;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D7277FA82CF7732D00AE853A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8FA6F58X42;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7277FA92CF7732D00AE853A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8FA6F58X42;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		D773911D2CF6502600795469 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -566,6 +803,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D7277F902CF76FB100AE853A /* Build configuration list for PBXNativeTarget "EMCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7277F912CF76FB100AE853A /* Debug */,
+				D7277F922CF76FB100AE853A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7277FA72CF7732D00AE853A /* Build configuration list for PBXNativeTarget "EMNetworkingService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7277FA82CF7732D00AE853A /* Debug */,
+				D7277FA92CF7732D00AE853A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D77390F02CF6501C00795469 /* Build configuration list for PBXProject "EMTodoList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

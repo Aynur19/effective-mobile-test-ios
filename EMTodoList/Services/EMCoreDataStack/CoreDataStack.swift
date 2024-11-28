@@ -29,7 +29,7 @@ public protocol CoreDataStackProtocol {
 
 
 public final class CoreDataStack {
-    typealias TaskKeys = TaskEntity.Keys
+    typealias TaskKeys = TaskCoreDataModel.Keys
     
     let todoPersistentContainer: NSPersistentContainer
     
@@ -61,7 +61,7 @@ extension CoreDataStack: CoreDataStackProtocol {
             logger.info("Удален файл базы данных!")
             
             reloadDatabase(database: database, persistentContainer: persistentContainer)
-            logger.info("ББаза данных пересоздана!")
+            logger.info("База данных пересоздана!")
         } catch let error as CoreDataStackOperationError {
             operationError = error
         } catch {

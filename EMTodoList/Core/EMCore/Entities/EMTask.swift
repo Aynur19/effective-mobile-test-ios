@@ -13,14 +13,14 @@ public struct EMTask {
     public var name: String
     public var taskDescription: String
     
-    public var createdOn: Date?
+    public var createdOn: Date
     public var isCompleted: Bool
     
     public init(
         id: Int64,
         name: String,
         taskDescription: String,
-        createdOn: Date? = nil,
+        createdOn: Date,
         isCompleted: Bool
     ) {
         self.id = id

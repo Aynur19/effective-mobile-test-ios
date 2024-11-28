@@ -19,7 +19,7 @@
 		D7277FB92CF78BD600AE853A /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FB82CF78BD600AE853A /* NetworkingService.swift */; };
 		D7277FBC2CF7905A00AE853A /* ToDoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7277FBA2CF7905A00AE853A /* ToDoModel.xcdatamodeld */; };
 		D7277FC42CF7919F00AE853A /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FC32CF7919F00AE853A /* CoreDataStack.swift */; };
-		D7277FCC2CF7925D00AE853A /* TaskCoreDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FC82CF7922200AE853A /* TaskCoreDataEntity.swift */; };
+		D7277FCC2CF7925D00AE853A /* TaskCoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FC82CF7922200AE853A /* TaskCoreDataModel.swift */; };
 		D7277FCE2CF79E5200AE853A /* CoreDataStackOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FCD2CF79E5200AE853A /* CoreDataStackOperationError.swift */; };
 		D7277FCF2CF79E7900AE853A /* libEMCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277F8C2CF76FB100AE853A /* libEMCore.a */; };
 		D7277FD12CF79ED400AE853A /* CoreDataStackOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FD02CF79ED400AE853A /* CoreDataStackOperation.swift */; };
@@ -32,6 +32,16 @@
 		D7277FE32CF7AECE00AE853A /* libEMCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277F8C2CF76FB100AE853A /* libEMCore.a */; };
 		D7277FE42CF7AECE00AE853A /* libEMCoreDataStack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277FC12CF7919E00AE853A /* libEMCoreDataStack.a */; };
 		D7277FE52CF7AECE00AE853A /* libEMNetworkingService.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7277FA32CF7732D00AE853A /* libEMNetworkingService.a */; };
+		D7277FE82CF7BF5800AE853A /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FE72CF7BF5800AE853A /* TaskDetailView.swift */; };
+		D7277FEA2CF7BFD300AE853A /* TaskDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FE92CF7BFD300AE853A /* TaskDetailInteractor.swift */; };
+		D7277FEC2CF7BFE900AE853A /* TaskDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FEB2CF7BFE900AE853A /* TaskDetailPresenter.swift */; };
+		D7277FEE2CF7C0A700AE853A /* TaskDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FED2CF7C0A700AE853A /* TaskDetailEntity.swift */; };
+		D7277FF02CF7C0BF00AE853A /* TaskDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FEF2CF7C0BF00AE853A /* TaskDetailRouter.swift */; };
+		D7277FF22CF7C0F000AE853A /* TaskDetailConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FF12CF7C0F000AE853A /* TaskDetailConfigurator.swift */; };
+		D7277FF62CF8949D00AE853A /* TaskDetailAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FF52CF8949D00AE853A /* TaskDetailAssets.swift */; };
+		D7277FF92CF8951100AE853A /* AssetsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FF82CF8951100AE853A /* AssetsProtocols.swift */; };
+		D7277FFB2CF896AC00AE853A /* TaskDetail.Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D7277FFA2CF896AC00AE853A /* TaskDetail.Localizable.xcstrings */; };
+		D7277FFE2CF8C5C400AE853A /* Date.Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7277FFC2CF8C5B300AE853A /* Date.Extensions.swift */; };
 		D77390F92CF6501C00795469 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390F82CF6501C00795469 /* AppDelegate.swift */; };
 		D77390FB2CF6501C00795469 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390FA2CF6501C00795469 /* SceneDelegate.swift */; };
 		D77390FD2CF6501C00795469 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77390FC2CF6501C00795469 /* ViewController.swift */; };
@@ -104,7 +114,7 @@
 		D7277FBB2CF7905A00AE853A /* ToDoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoModel.xcdatamodel; sourceTree = "<group>"; };
 		D7277FC12CF7919E00AE853A /* libEMCoreDataStack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEMCoreDataStack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7277FC32CF7919F00AE853A /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		D7277FC82CF7922200AE853A /* TaskCoreDataEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCoreDataEntity.swift; sourceTree = "<group>"; };
+		D7277FC82CF7922200AE853A /* TaskCoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCoreDataModel.swift; sourceTree = "<group>"; };
 		D7277FCD2CF79E5200AE853A /* CoreDataStackOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackOperationError.swift; sourceTree = "<group>"; };
 		D7277FD02CF79ED400AE853A /* CoreDataStackOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackOperation.swift; sourceTree = "<group>"; };
 		D7277FD32CF79F3B00AE853A /* CoreDataDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDatabase.swift; sourceTree = "<group>"; };
@@ -113,6 +123,16 @@
 		D7277FDA2CF7A33400AE853A /* EMTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMTask.swift; sourceTree = "<group>"; };
 		D7277FDD2CF7ADB400AE853A /* Logger.Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.Extensions.swift; sourceTree = "<group>"; };
 		D7277FDF2CF7AE8C00AE853A /* ManagerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerProvider.swift; sourceTree = "<group>"; };
+		D7277FE72CF7BF5800AE853A /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
+		D7277FE92CF7BFD300AE853A /* TaskDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailInteractor.swift; sourceTree = "<group>"; };
+		D7277FEB2CF7BFE900AE853A /* TaskDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailPresenter.swift; sourceTree = "<group>"; };
+		D7277FED2CF7C0A700AE853A /* TaskDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailEntity.swift; sourceTree = "<group>"; };
+		D7277FEF2CF7C0BF00AE853A /* TaskDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRouter.swift; sourceTree = "<group>"; };
+		D7277FF12CF7C0F000AE853A /* TaskDetailConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailConfigurator.swift; sourceTree = "<group>"; };
+		D7277FF52CF8949D00AE853A /* TaskDetailAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailAssets.swift; sourceTree = "<group>"; };
+		D7277FF82CF8951100AE853A /* AssetsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsProtocols.swift; sourceTree = "<group>"; };
+		D7277FFA2CF896AC00AE853A /* TaskDetail.Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = TaskDetail.Localizable.xcstrings; sourceTree = "<group>"; };
+		D7277FFC2CF8C5B300AE853A /* Date.Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.Extensions.swift; sourceTree = "<group>"; };
 		D77390F52CF6501C00795469 /* EMTodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMTodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D77390F82CF6501C00795469 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D77390FA2CF6501C00795469 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -252,7 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				D7277FD32CF79F3B00AE853A /* CoreDataDatabase.swift */,
-				D7277FC82CF7922200AE853A /* TaskCoreDataEntity.swift */,
+				D7277FC82CF7922200AE853A /* TaskCoreDataModel.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -269,8 +289,41 @@
 			isa = PBXGroup;
 			children = (
 				D7277FDD2CF7ADB400AE853A /* Logger.Extensions.swift */,
+				D7277FFC2CF8C5B300AE853A /* Date.Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D7277FE62CF7BF2400AE853A /* TaskDetailModule */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FF32CF8941D00AE853A /* Assets */,
+				D7277FE72CF7BF5800AE853A /* TaskDetailView.swift */,
+				D7277FE92CF7BFD300AE853A /* TaskDetailInteractor.swift */,
+				D7277FEB2CF7BFE900AE853A /* TaskDetailPresenter.swift */,
+				D7277FEF2CF7C0BF00AE853A /* TaskDetailRouter.swift */,
+				D7277FF12CF7C0F000AE853A /* TaskDetailConfigurator.swift */,
+				D7277FED2CF7C0A700AE853A /* TaskDetailEntity.swift */,
+			);
+			path = TaskDetailModule;
+			sourceTree = "<group>";
+		};
+		D7277FF32CF8941D00AE853A /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				D7277FF52CF8949D00AE853A /* TaskDetailAssets.swift */,
+				D7277FFA2CF896AC00AE853A /* TaskDetail.Localizable.xcstrings */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		D7277FF72CF894F900AE853A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D77391012CF6502500795469 /* Assets.xcassets */,
+				D7277FF82CF8951100AE853A /* AssetsProtocols.swift */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D77390EC2CF6501C00795469 = {
@@ -303,10 +356,11 @@
 		D77390F72CF6501C00795469 /* EMTodoList */ = {
 			isa = PBXGroup;
 			children = (
+				D7277FF72CF894F900AE853A /* Resources */,
+				D7277FE62CF7BF2400AE853A /* TaskDetailModule */,
 				D77390F82CF6501C00795469 /* AppDelegate.swift */,
 				D77390FA2CF6501C00795469 /* SceneDelegate.swift */,
 				D77390FC2CF6501C00795469 /* ViewController.swift */,
-				D77391012CF6502500795469 /* Assets.xcassets */,
 				D77391032CF6502500795469 /* LaunchScreen.storyboard */,
 				D77391062CF6502500795469 /* Info.plist */,
 				D7277FDF2CF7AE8C00AE853A /* ManagerProvider.swift */,
@@ -477,6 +531,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = D77390EC2CF6501C00795469;
 			productRefGroup = D77390F62CF6501C00795469 /* Products */;
@@ -500,6 +555,7 @@
 			files = (
 				D77391052CF6502500795469 /* LaunchScreen.storyboard in Resources */,
 				D77391022CF6502500795469 /* Assets.xcassets in Resources */,
+				D7277FFB2CF896AC00AE853A /* TaskDetail.Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +585,7 @@
 				D7277FD82CF7A1BB00AE853A /* OperationProtocol.swift in Sources */,
 				D7277FDB2CF7A33400AE853A /* EMTask.swift in Sources */,
 				D7277FD62CF79F7000AE853A /* EnumProtocol.swift in Sources */,
+				D7277FFE2CF8C5C400AE853A /* Date.Extensions.swift in Sources */,
 				D7277F942CF76FD800AE853A /* AppErrorProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -552,7 +609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7277FCC2CF7925D00AE853A /* TaskCoreDataEntity.swift in Sources */,
+				D7277FCC2CF7925D00AE853A /* TaskCoreDataModel.swift in Sources */,
 				D7277FD12CF79ED400AE853A /* CoreDataStackOperation.swift in Sources */,
 				D7277FCE2CF79E5200AE853A /* CoreDataStackOperationError.swift in Sources */,
 				D7277FC42CF7919F00AE853A /* CoreDataStack.swift in Sources */,
@@ -566,8 +623,16 @@
 			files = (
 				D77390FD2CF6501C00795469 /* ViewController.swift in Sources */,
 				D77390F92CF6501C00795469 /* AppDelegate.swift in Sources */,
+				D7277FE82CF7BF5800AE853A /* TaskDetailView.swift in Sources */,
+				D7277FEE2CF7C0A700AE853A /* TaskDetailEntity.swift in Sources */,
+				D7277FF92CF8951100AE853A /* AssetsProtocols.swift in Sources */,
+				D7277FF02CF7C0BF00AE853A /* TaskDetailRouter.swift in Sources */,
 				D7277FE02CF7AE8C00AE853A /* ManagerProvider.swift in Sources */,
 				D77390FB2CF6501C00795469 /* SceneDelegate.swift in Sources */,
+				D7277FF22CF7C0F000AE853A /* TaskDetailConfigurator.swift in Sources */,
+				D7277FF62CF8949D00AE853A /* TaskDetailAssets.swift in Sources */,
+				D7277FEA2CF7BFD300AE853A /* TaskDetailInteractor.swift in Sources */,
+				D7277FEC2CF7BFE900AE853A /* TaskDetailPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -829,8 +894,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EMTodoList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -861,8 +926,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EMTodoList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (

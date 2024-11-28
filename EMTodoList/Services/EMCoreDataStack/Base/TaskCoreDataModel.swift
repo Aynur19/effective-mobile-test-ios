@@ -1,5 +1,5 @@
 //
-//  TaskCoreDataEntity.swift
+//  TaskCoreDataModel.swift
 //  EMCoreDataStack
 //
 //  Created by Aynur Nasybullin on 27.11.2024.
@@ -11,25 +11,25 @@ import CoreData
 import EMCore
 
 @objc(TaskEntity)
-public class TaskEntity: NSManagedObject { }
+public class TaskCoreDataModel: NSManagedObject { }
 
-extension TaskEntity {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<TaskEntity> {
-        return NSFetchRequest<TaskEntity>(entityName: "TaskEntity")
+extension TaskCoreDataModel {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<TaskCoreDataModel> {
+        return NSFetchRequest<TaskCoreDataModel>(entityName: entityName)
     }
 
     @NSManaged public var id: Int64
     @NSManaged public var name: String
-    @NSManaged public var createdOn: Date?
+    @NSManaged public var createdOn: Date
     @NSManaged public var isCompleted: Bool
     @NSManaged public var taskDescription: String
 }
 
-extension TaskEntity: Identifiable { }
+extension TaskCoreDataModel: Identifiable { }
 
 
-extension TaskEntity {
-    static let entityName = "\(TaskEntity.self)"
+extension TaskCoreDataModel {
+    static let entityName = "\(TaskCoreDataModel.self)"
 
     enum Keys: String {
         case id
@@ -41,15 +41,15 @@ extension TaskEntity {
         var key: String { self.rawValue }
     }
     
-    static func create(context: NSManagedObjectContext, emTask: EMTask) -> TaskEntity {
-        let taskEntity = TaskEntity(context: context)
-        taskEntity.id = emTask.id
-        taskEntity.name = emTask.name
-        taskEntity.taskDescription = emTask.taskDescription
-        taskEntity.createdOn = emTask.createdOn
-        taskEntity.isCompleted = emTask.isCompleted
+    static func create(context: NSManagedObjectContext, emTask: EMTask) -> TaskCoreDataModel {
+        let task = TaskCoreDataModel(context: context)
+        task.id = emTask.id
+        task.name = emTask.name
+        task.taskDescription = emTask.taskDescription
+        task.createdOn = emTask.createdOn
+        task.isCompleted = emTask.isCompleted
 
-        return taskEntity
+        return task
     }
 
 
@@ -64,8 +64,8 @@ extension TaskEntity {
     }
 
 
-    static func geTaskFetchRequest(taskId: Int64) -> NSFetchRequest<TaskEntity> {
-        let fetchRequest = TaskEntity.fetchRequest()
+    static func geTaskFetchRequest(taskId: Int64) -> NSFetchRequest<TaskCoreDataModel> {
+        let fetchRequest = TaskCoreDataModel.fetchRequest()
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
             getIdPredicate(taskId),
         ])
@@ -79,11 +79,11 @@ extension TaskEntity {
         isCompleted: Bool?,
         startDate: Date?,
         endDate: Date?,
-        sortKeys: [(TaskEntity.Keys, Bool)]
-    ) -> NSFetchRequest<TaskEntity> {
+        sortKeys: [(TaskCoreDataModel.Keys, Bool)]
+    ) -> NSFetchRequest<TaskCoreDataModel> {
         let predicates = getPredicates(isCompleted: isCompleted, startDate: startDate, endDate: endDate)
         
-        let fetchRequest = TaskEntity.fetchRequest()
+        let fetchRequest = TaskCoreDataModel.fetchRequest()
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         fetchRequest.sortDescriptors = sortKeys.map { getSortDescriptor($0.0, ascending: $0.1) }
 

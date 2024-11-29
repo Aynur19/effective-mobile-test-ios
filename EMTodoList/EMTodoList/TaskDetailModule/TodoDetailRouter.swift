@@ -1,5 +1,5 @@
 //
-//  TaskRouter.swift
+//  TodoDetailRouter.swift
 //  EMTodoList
 //
 //  Created by Aynur Nasybullin on 28.11.2024.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol TaskDetailRouterProtocol: AnyObject {
+protocol TodoDetailRouterProtocol: AnyObject {
     func closeCurrentViewController()
 }
 
-class TaskDetailRouter: TaskDetailRouterProtocol {
-    weak var viewController: TaskDetailViewController!
+class TodoDetailRouter: TodoDetailRouterProtocol {
+    weak var viewController: TodoDetailViewController!
     
-    required init(viewController: TaskDetailViewController) {
+    required init(viewController: TodoDetailViewController) {
         self.viewController = viewController
     }
  

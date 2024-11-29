@@ -25,7 +25,6 @@ public enum CoreDataStackOperation {
 extension CoreDataStackOperation: OperationProtocol {
     public var id: Int {
         switch self {
-            // chat
             case .fetchTasks:                   101
             case .saveTasks:                    102
                 

@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
                 
-        let initialViewController = TaskDetailViewController()
-        TaskDetailConfigurator().configure(with: initialViewController)
+        let initialViewController = TodoDetailViewController()
+        TodoDetailConfigurator().configure(with: initialViewController)
         let navigationController = UINavigationController(rootViewController: initialViewController)
         
         window.rootViewController = navigationController

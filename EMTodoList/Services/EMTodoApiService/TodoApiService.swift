@@ -10,7 +10,7 @@ import EMCore
 import EMNetworkingService
 
 public protocol TodoApiServiceProtocol {
-    func fetchTodoList(url: URL, completion: @escaping (Result<[EMTask], NetworkingServiceError>) -> Void)
+    func fetchTodoList(url: URL, completion: @escaping (Result<[Todo], NetworkingServiceError>) -> Void)
 }
 
 
@@ -23,11 +23,11 @@ public final class TodoApiService {
 }
 
 extension TodoApiService: TodoApiServiceProtocol {
-    public func fetchTodoList(url: URL, completion: @escaping (Result<[EMTask], NetworkingServiceError>) -> Void) {
+    public func fetchTodoList(url: URL, completion: @escaping (Result<[Todo], NetworkingServiceError>) -> Void) {
         networkService.fetchData(url: url, responseDtoType: TodoListResponseDto.self) { result in
             switch result {
                 case .success(let responseDto):
-                    let tasks = EMTask.create(todoList: responseDto)
+                    let tasks = Todo.create(todoList: responseDto)
                     completion(.success(tasks))
                 
                 case .failure(let error):

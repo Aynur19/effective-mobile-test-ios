@@ -1,5 +1,5 @@
 //
-//  TaskDetailView.swift
+//  TodoDetailView.swift
 //  EMTodoList
 //
 //  Created by Aynur Nasybullin on 27.11.2024.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol TaskDetailViewProtocol: AnyObject {
-    func showTask(_ task: TaskDetailEntity)
+protocol TodoDetailViewProtocol: AnyObject {
+    func showTask(_ task: TodoDetailEntity)
 }
 
-class TaskDetailViewController: UIViewController {
-    var presenter: TaskDetailPresenterProtocol!
-    let configurator: TaskDetailConfiguratorProtocol = TaskDetailConfigurator()
+class TodoDetailViewController: UIViewController {
+    var presenter: TodoDetailPresenterProtocol!
+    let configurator: TodoDetailConfiguratorProtocol = TodoDetailConfigurator()
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -114,8 +114,8 @@ class TaskDetailViewController: UIViewController {
     }
 }
 
-extension TaskDetailViewController: TaskDetailViewProtocol {
-    func showTask(_ task: TaskDetailEntity) {
+extension TodoDetailViewController: TodoDetailViewProtocol {
+    func showTask(_ task: TodoDetailEntity) {
         taskNameTextField.text = task.name
         
         let createdOnText = taskCreatedOnAttributedText(task.createdOn.taskShortDate)
@@ -126,7 +126,7 @@ extension TaskDetailViewController: TaskDetailViewProtocol {
     }
 }
 
-extension TaskDetailViewController {
+extension TodoDetailViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         

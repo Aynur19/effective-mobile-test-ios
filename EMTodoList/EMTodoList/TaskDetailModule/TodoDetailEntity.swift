@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TaskDetailEntity {
+struct TodoDetailEntity {
     let id: Int64
     
     var name: String

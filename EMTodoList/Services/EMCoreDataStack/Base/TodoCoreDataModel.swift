@@ -1,5 +1,5 @@
 //
-//  TaskCoreDataModel.swift
+//  TodoCoreDataModel.swift
 //  EMCoreDataStack
 //
 //  Created by Aynur Nasybullin on 27.11.2024.
@@ -11,25 +11,25 @@ import CoreData
 import EMCore
 
 @objc(TaskEntity)
-public class TaskCoreDataModel: NSManagedObject { }
+public class TodoCoreDataModel: NSManagedObject { }
 
-extension TaskCoreDataModel {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<TaskCoreDataModel> {
-        return NSFetchRequest<TaskCoreDataModel>(entityName: entityName)
+extension TodoCoreDataModel {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<TodoCoreDataModel> {
+        return NSFetchRequest<TodoCoreDataModel>(entityName: entityName)
     }
 
     @NSManaged public var id: Int64
     @NSManaged public var name: String
     @NSManaged public var createdOn: Date
     @NSManaged public var isCompleted: Bool
-    @NSManaged public var taskDescription: String
+    @NSManaged public var todoDescription: String
 }
 
-extension TaskCoreDataModel: Identifiable { }
+extension TodoCoreDataModel: Identifiable { }
 
 
-extension TaskCoreDataModel {
-    static let entityName = "\(TaskCoreDataModel.self)"
+extension TodoCoreDataModel {
+    static let entityName = "\(TodoCoreDataModel.self)"
 
     enum Keys: String {
         case id
@@ -41,31 +41,31 @@ extension TaskCoreDataModel {
         var key: String { self.rawValue }
     }
     
-    static func create(context: NSManagedObjectContext, emTask: EMTask) -> TaskCoreDataModel {
-        let task = TaskCoreDataModel(context: context)
-        task.id = emTask.id
-        task.name = emTask.name
-        task.taskDescription = emTask.taskDescription
-        task.createdOn = emTask.createdOn
-        task.isCompleted = emTask.isCompleted
+    static func create(context: NSManagedObjectContext, todo: Todo) -> TodoCoreDataModel {
+        let todoModel = TodoCoreDataModel(context: context)
+        todoModel.id = todo.id
+        todoModel.name = todo.name
+        todoModel.todoDescription = todo.description
+        todoModel.createdOn = todo.createdOn
+        todoModel.isCompleted = todo.isCompleted
 
-        return task
+        return todoModel
     }
 
 
-    var emTask: EMTask {
-        EMTask(
+    var emTask: Todo {
+        Todo(
             id: id,
             name: name,    
-            taskDescription: taskDescription,
+            description: todoDescription,
             createdOn: createdOn,
             isCompleted: isCompleted
         )
     }
 
 
-    static func geTaskFetchRequest(taskId: Int64) -> NSFetchRequest<TaskCoreDataModel> {
-        let fetchRequest = TaskCoreDataModel.fetchRequest()
+    static func geTaskFetchRequest(taskId: Int64) -> NSFetchRequest<TodoCoreDataModel> {
+        let fetchRequest = TodoCoreDataModel.fetchRequest()
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
             getIdPredicate(taskId),
         ])
@@ -79,11 +79,11 @@ extension TaskCoreDataModel {
         isCompleted: Bool?,
         startDate: Date?,
         endDate: Date?,
-        sortKeys: [(TaskCoreDataModel.Keys, Bool)]
-    ) -> NSFetchRequest<TaskCoreDataModel> {
+        sortKeys: [(TodoCoreDataModel.Keys, Bool)]
+    ) -> NSFetchRequest<TodoCoreDataModel> {
         let predicates = getPredicates(isCompleted: isCompleted, startDate: startDate, endDate: endDate)
         
-        let fetchRequest = TaskCoreDataModel.fetchRequest()
+        let fetchRequest = TodoCoreDataModel.fetchRequest()
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         fetchRequest.sortDescriptors = sortKeys.map { getSortDescriptor($0.0, ascending: $0.1) }
 

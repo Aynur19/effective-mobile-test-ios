@@ -29,7 +29,7 @@ public protocol CoreDataStackProtocol {
 
 
 public final class CoreDataStack {
-    typealias TaskKeys = TaskCoreDataModel.Keys
+    typealias TaskKeys = TodoCoreDataModel.Keys
     
     let todoPersistentContainer: NSPersistentContainer
     

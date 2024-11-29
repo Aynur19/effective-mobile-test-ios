@@ -1,5 +1,5 @@
 //
-//  EMTask.Extensions.swift
+//  Todo.Extensions.swift
 //  EMTodoApiService
 //
 //  Created by Aynur Nasybullin on 29.11.2024.
@@ -8,7 +8,7 @@
 import EMCore
 import EMNetworkingService
 
-extension EMTask {
+extension Todo {
     static func create(todoList: TodoListResponseDto) -> [Self] {
         todoList.todos.map { .create(todo: $0) }
     }
@@ -17,7 +17,7 @@ extension EMTask {
         .init(
             id: todo.id,
             name: String(todo.id),
-            taskDescription: todo.todo,
+            description: todo.todo,
             createdOn: .now,
             isCompleted: todo.completed
         )

@@ -12,15 +12,17 @@ public enum NetworkingServiceError {
     case taskCanceled
     
     case sendRequestEncodingError(endpoint: EndpointProtocol, error: EncodingError)
-    case sendRequestUrlError(endpoint: EndpointProtocol, error: URLError)
-    case sendRequestNotHttpResponse(request: URLRequest, response: URLResponse, data: Data)
-    case sendRequestHttpResponseHasNotStatus2xx(request: URLRequest, response: HTTPURLResponse, data: Data)
-    case sendRequestDecodingError(endpoint: EndpointProtocol, error: DecodingError)
-    case sendRequestUnhandled(endpoint: EndpointProtocol, error: Error)
+    case sendRequestUrlError(urlRequest: URLRequest, error: URLError)
+    case sendRequestNotHttpResponse(urlRequest: URLRequest, response: URLResponse)
+    case sendRequestHttpResponseHasNotStatus2xx(urlRequest: URLRequest, response: HTTPURLResponse)
+    case sendRequestDecodingError(urlRequest: URLRequest, error: DecodingError)
+    case sendRequestUnhandled(urlRequest: URLRequest, error: Error)
+    case sendRequestResponseDataIsNil(urlRequest: URLRequest)
     
     case fetchDataUrlError(url: URL, error: URLError)
     case fetchDataDecodingError(url: URL, error: DecodingError)
     case fetchDataUnhandled(url: URL, error: Error)
+    case fetchDataResponseDataIsNil(url: URL)
     
     case unknown
 }
@@ -36,32 +38,35 @@ extension NetworkingServiceError: AppErrorProtocol {
                 "   Endpoint: \(endpoint)\n" +
                 "   Error: \(error)\n"
                 
-            case .sendRequestUrlError(endpoint: let endpoint, error: let error):
+            case .sendRequestUrlError(let urlRequest, let error):
                 "Сетевая ошибка при выполнении запроса:\n" +
-                "   Endpoint: \(endpoint)\n" +
+                "   URLRequest: \(urlRequest)\n" +
                 "   Error: \(error)\n"
                 
-            case .sendRequestNotHttpResponse(let request, let response, let data):
+            case .sendRequestNotHttpResponse(let urlRequest, let response):
                 "Не удалось привести объект типа URLResponse к типу HTTPURLResponse:\n" +
-                "   URLRequest: \(String(describing: request))\n" +
-                "   URLResponse: \(response)\n" +
-                "   Data (Str): \(String(data: data, encoding: .utf8) ?? "nil (UTF-8)")\n"
+                "   URLRequest: \(String(describing: urlRequest))\n" +
+                "   URLResponse: \(response)\n"
                 
-            case .sendRequestHttpResponseHasNotStatus2xx(let request, let response, let data):
+            case .sendRequestHttpResponseHasNotStatus2xx(let urlRequest, let response):
                 "Ответ за запрос вернул HTTP статус с кодом не равным 2ХХ:\n" +
-                "   URLRequest: \(String(describing: request))\n" +
-                "   HTTPURLResponse: \(response)\n" +
-                "   Data (Str): \(String(data: data, encoding: .utf8) ?? "nil (UTF-8)")\n"
+                "   URLRequest: \(String(describing: urlRequest))\n" +
+                "   HTTPURLResponse: \(response)\n"
                 
-            case .sendRequestDecodingError(let endpoint, let error):
+            case .sendRequestDecodingError(let urlRequest, let error):
                 "Не удалось преобразовать тело ответа в DTO модель ответа:\n" +
-                "   Endpoint: \(endpoint)\n" +
+                "   URLRequest: \(urlRequest)\n" +
                 "   Error: \(error)\n"
                 
-            case .sendRequestUnhandled(let endpoint, let error):
+            case .sendRequestUnhandled(let urlRequest, let error):
                 "Необработанная ошибка при выполнении сетевого запроса:\n" +
-                "   Endpoint: \(endpoint)\n" +
+                "   URLRequest: \(urlRequest)\n" +
                 "   Error: \(error)\n"
+                
+            case .sendRequestResponseDataIsNil(let urlRequest):
+                "Получены пустые данные (data == nil):\n" +
+                "   URLRequest: \(urlRequest)\n"
+                
                 
                 
             case .fetchDataUrlError(let url, let error):
@@ -78,6 +83,10 @@ extension NetworkingServiceError: AppErrorProtocol {
                 "Необработанная ошибка при выполнении сетевого запроса:\n" +
                 "   URL: \(url)\n" +
                 "   Error: \(error)\n"
+                
+            case .fetchDataResponseDataIsNil(let url):
+                "Получены пустые данные (data == nil):\n" +
+                "   URL: \(url)\n"
                 
             case .unknown:
                 "НЕИЗВЕСТНАЯ ОШИБКА...\n"

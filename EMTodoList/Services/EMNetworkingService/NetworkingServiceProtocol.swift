@@ -11,24 +11,28 @@ public protocol NetworkingServiceProtocol {
     func sendRequestWithRetries<T1: Encodable, T2: Decodable>(
         endpoint: EndpointProtocol,
         requestDto: T1,
-        responseDtoType: T2.Type
-    ) async -> Result<T2, NetworkingServiceError>
-    
-    
-    func fetchDataWithRetries<T: Decodable>(
-        url: URL,
-        type: T.Type
-    ) async -> Result<T, NetworkingServiceError>
-    
+        responseDtoType: T2.Type,
+        completion: @escaping (Result<T2, NetworkingServiceError>) -> Void
+    )
     
     func sendRequest<T1: Encodable, T2: Decodable>(
         endpoint: EndpointProtocol,
         requestDto: T1,
-        responseDtoType: T2.Type
-    ) async -> Result<T2, NetworkingServiceError>
+        responseDtoType: T2.Type,
+        completion: @escaping (Result<T2, NetworkingServiceError>) -> Void
+    )
     
+    func fetchDataWithRetries<T: Decodable>(
+        url: URL,
+        responseDtoType: T.Type,
+        completion: @escaping (Result<T, NetworkingServiceError>) -> Void
+    )
     
-    func fetchData<T: Decodable>(url: URL, type: T.Type) async -> Result<T, NetworkingServiceError>
+    func fetchData<T: Decodable>(
+        url: URL,
+        responseDtoType: T.Type,
+        completion: @escaping (Result<T, NetworkingServiceError>) -> Void
+    )
 }
 
 
@@ -46,10 +50,6 @@ extension NetworkingServiceProtocol {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .secondsSince1970
         
-        do {
-            return try encoder.encode(requestDto)
-        } catch let error as EncodingError {
-            throw NetworkingServiceError.sendRequestEncodingError(endpoint: endpoint, error: error)
-        }
+        return try encoder.encode(requestDto)
     }
 }

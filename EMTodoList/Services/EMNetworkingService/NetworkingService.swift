@@ -25,119 +25,210 @@ extension NetworkingService: NetworkingServiceProtocol {
     public func sendRequestWithRetries<T1: Encodable, T2: Decodable>(
         endpoint: EndpointProtocol,
         requestDto: T1,
-        responseDtoType: T2.Type
-    ) async -> Result<T2, NetworkingServiceError> {
+        responseDtoType: T2.Type,
+        completion: @escaping (Result<T2, NetworkingServiceError>) -> Void
+    ) {
         var currentRetry = 0
         var lastError: NetworkingServiceError?
-
-        while currentRetry < config.maxRetries {
-            if Task.isCancelled {
-                return .failure(.taskCanceled)
-            }
-
-            let result = await sendRequest(
-                endpoint: endpoint,
-                requestDto: requestDto,
-                responseDtoType: responseDtoType
-            )
+        let operationQueue = OperationQueue()
+        
+        let operation = BlockOperation()
+        operation.addExecutionBlock { [weak self] in
+            guard let self else { return }
             
-            switch result {
-                case .success(let response):
-                    return .success(response)
-                    
-                case .failure(let error):
-                    lastError = error
-                    
-                    if !shouldRetry(for: error) {
-                        return .failure(error)
+            while currentRetry < config.maxRetries {
+                if operation.isCancelled {
+                    return completion(.failure(.taskCanceled))
+                }
+                
+                sendRequest(
+                    endpoint: endpoint,
+                    requestDto: requestDto,
+                    responseDtoType: responseDtoType
+                ) { [weak self] result in
+                    guard let self else {
+                        return completion(.failure(.taskCanceled))
                     }
+                    
+                    switch result {
+                        case .success(let response):
+                            return completion(.success(response))
+                            
+                        case .failure(let error):
+                            lastError = error
+                            
+                            if !shouldRetry(for: error) {
+                                return completion(.failure(error))
+                            }
+                    }
+                    
+                    currentRetry += 1
+                    let delayTime = config.delay * pow(2.0, Double(currentRetry - 1))
+                    
+                    DispatchQueue.global().asyncAfter(deadline: .now() + delayTime) { [weak operation] in
+                        guard let operation = operation else { return }
+                        
+                        if !operation.isCancelled {
+                            operationQueue.addOperation(operation)
+                        }
+                    }
+                }
             }
-            currentRetry += 1
-
-            // Экспоненциальная задержка
-            print("Ошибка при выполненнии запроса. lastError: \(lastError?.debugMessage ?? "nil")")
-            let delayTime = config.delay * pow(2.0, Double(currentRetry - 1))
-            try? await Task.sleep(nanoseconds: UInt64(delayTime * 1_000_000_000))
+            
+            completion(.failure(lastError ?? .unknown))
         }
         
-        // Если все попытки были неудачны, возвращаем последнюю ошибку
-        return .failure(lastError ?? .unknown)
+        operationQueue.addOperation(operation)
     }
 
 
     public func sendRequest<T1: Encodable, T2: Decodable>(
         endpoint: EndpointProtocol,
         requestDto: T1,
-        responseDtoType: T2.Type
-    ) async -> Result<T2, NetworkingServiceError> {
+        responseDtoType: T2.Type,
+        completion: @escaping (Result<T2, NetworkingServiceError>) -> Void
+    ) {
+        let urlRequest: URLRequest
+        
         do {
-            let urlRequest = try createRequest(endpoint: endpoint, requestDto: requestDto)
-            let (data, response) = try await session.data(for: urlRequest)
-            try checkResponse(request: urlRequest, response: response, data: data)
-            let responseDto = try JSONDecoder().decode(T2.self, from: data)
-            return .success(responseDto)
-        } catch let error as NetworkingServiceError {
-            return .failure(error)
-        } catch let error as URLError {
-            return .failure(.sendRequestUrlError(endpoint: endpoint, error: error))
-        } catch let error as DecodingError {
-            return .failure(.sendRequestDecodingError(endpoint: endpoint, error: error))
+            urlRequest = try createRequest(endpoint: endpoint, requestDto: requestDto)
+        } catch let error as EncodingError {
+            return completion(.failure(.sendRequestEncodingError(endpoint: endpoint, error: error)))
         } catch {
-            return .failure(.sendRequestUnhandled(endpoint: endpoint, error: error))
+            return completion(.failure(.unknown))
+        }
+        
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self else {
+                return completion(.failure(.taskCanceled))
+            }
+            
+            let task = session.dataTask(with: urlRequest) { data, response, error in
+                if let error = error {
+                    if let urlError = error as? URLError {
+                        return completion(.failure(.sendRequestUrlError(urlRequest: urlRequest, error: urlError)))
+                    } else {
+                        return completion(.failure(.sendRequestUnhandled(urlRequest: urlRequest, error: error)))
+                    }
+                }
+                
+                guard let data = data else {
+                    return completion(.failure(.sendRequestResponseDataIsNil(urlRequest: urlRequest)))
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(T2.self, from: data)
+                    completion(.success(result))
+                } catch let error as DecodingError {
+                    completion(.failure(.sendRequestDecodingError(urlRequest: urlRequest, error: error)))
+                } catch {
+                    completion(.failure(.sendRequestUnhandled(urlRequest: urlRequest, error: error)))
+                }
+            }
+            
+            task.resume()
+        }
+        
+        DispatchQueue.global().async(execute: workItem)
+        
+        if workItem.isCancelled {
+            return completion(.failure(.taskCanceled))
         }
     }
     
     
     public func fetchDataWithRetries<T: Decodable>(
         url: URL,
-        type: T.Type
-    ) async -> Result<T, NetworkingServiceError> {
+        responseDtoType: T.Type,
+        completion: @escaping (Result<T, NetworkingServiceError>) -> Void
+    ) {
         var currentRetry = 0
         var lastError: NetworkingServiceError?
-
-        while currentRetry < config.maxRetries {
-            if Task.isCancelled {
-                return .failure(.taskCanceled)
-            }
-
-            let result = await fetchData(url: url, type: type)
+        let operationQueue = OperationQueue()
+        
+        let operation = BlockOperation()
+        operation.addExecutionBlock { [weak self] in
+            guard let self else { return }
             
-            switch result {
-                case .success(let response):
-                    return .success(response)
-                    
-                case .failure(let error):
-                    lastError = error
-                    
-                    if !shouldRetry(for: error) {
-                        return .failure(error)
+            while currentRetry < config.maxRetries {
+                if operation.isCancelled {
+                    return completion(.failure(.taskCanceled))
+                }
+                
+                fetchData(url: url, responseDtoType: responseDtoType) { [weak self] result in
+                    guard let self else {
+                        return completion(.failure(.taskCanceled))
                     }
+                    
+                    switch result {
+                        case .success(let response):
+                            return completion(.success(response))
+                            
+                        case .failure(let error):
+                            lastError = error
+                            
+                            if !shouldRetry(for: error) {
+                                return completion(.failure(error))
+                            }
+                    }
+                    
+                    currentRetry += 1
+                    let delayTime = config.delay * pow(2.0, Double(currentRetry - 1))
+                    
+                    DispatchQueue.global().asyncAfter(deadline: .now() + delayTime) {
+                        if !operation.isCancelled {
+                            operationQueue.addOperation(operation)
+                        }
+                    }
+                }
             }
-            currentRetry += 1
-
-            // Экспоненциальная задержка
-            let delayTime = config.delay * pow(2.0, Double(currentRetry - 1))
-            try? await Task.sleep(nanoseconds: UInt64(delayTime * 1_000_000_000))
+            
+            completion(.failure(lastError ?? .unknown))
         }
         
-        return .failure(lastError ?? .unknown)
+        operationQueue.addOperation(operation)
     }
     
     
     public func fetchData<T: Decodable>(
         url: URL,
-        type: T.Type
-    ) async -> Result<T, NetworkingServiceError> {
-        do {
-            let (data, _) = try await session.data(from: url)
-            let result = try JSONDecoder().decode(T.self, from: data)
-            return .success(result)
-        } catch let error as URLError {
-            return .failure(.fetchDataUrlError(url: url, error: error))
-        } catch let error as DecodingError {
-            return .failure(.fetchDataDecodingError(url: url, error: error))
-        } catch {
-            return .failure(.fetchDataUnhandled(url: url, error: error))
+        responseDtoType: T.Type,
+        completion: @escaping (Result<T, NetworkingServiceError>) -> Void
+    ) {
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self else {
+                return completion(.failure(.taskCanceled))
+            }
+            
+            let task = session.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    if let urlError = error as? URLError {
+                        return completion(.failure(.fetchDataUrlError(url: url, error: urlError)))
+                    } else {
+                        return completion(.failure(.fetchDataUnhandled(url: url, error: error)))
+                    }
+                }
+                
+                guard let data = data else {
+                    return completion(.failure(.fetchDataResponseDataIsNil(url: url)))
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(result))
+                } catch let error as DecodingError {
+                    completion(.failure(.fetchDataDecodingError(url: url, error: error)))
+                } catch {
+                    completion(.failure(.fetchDataUnhandled(url: url, error: error)))
+                }
+            }
+            
+            task.resume()
+        }
+        
+        DispatchQueue.global().async(execute: workItem)
+        if workItem.isCancelled {
+            return completion(.failure(.taskCanceled))
         }
     }
     
@@ -150,21 +241,6 @@ extension NetworkingService: NetworkingServiceProtocol {
             
             default:
                 return false
-        }
-    }
-    
-    
-    private func checkResponse(request: URLRequest, response: URLResponse, data: Data) throws {
-        guard let response = response as? HTTPURLResponse else {
-            throw NetworkingServiceError.sendRequestNotHttpResponse(
-                request: request, response: response, data: data
-            )
-        }
-        
-        guard 200...299 ~= response.statusCode else {
-            throw NetworkingServiceError.sendRequestHttpResponseHasNotStatus2xx(
-                request: request, response: response, data: data
-            )
         }
     }
 }

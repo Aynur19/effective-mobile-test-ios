@@ -24,12 +24,15 @@ func getLoggedError(
 
 
 public protocol CoreDataStackProtocol {
-    func resetDatabase(database: CoreDataDatabase) async -> CoreDataStackOperationError?
+    func resetDatabase(
+        database: CoreDataDatabase,
+        completion: @escaping (CoreDataStackOperationError?) -> Void
+    )
 }
 
 
 public final class CoreDataStack {
-    typealias TaskKeys = TodoCoreDataModel.Keys
+    typealias TodoKeys = TodoCoreDataModel.Keys
     
     let todoPersistentContainer: NSPersistentContainer
     
@@ -42,7 +45,10 @@ public final class CoreDataStack {
 
 
 extension CoreDataStack: CoreDataStackProtocol {
-    public func resetDatabase(database: CoreDataDatabase) async -> CoreDataStackOperationError? {
+    public func resetDatabase(
+        database: CoreDataDatabase,
+        completion: @escaping (CoreDataStackOperationError?) -> Void
+    ) {
         logger.info("Инициация процесса удаления базы данных чатов перед выходом")
         
         var operationError: CoreDataStackOperationError?
@@ -53,51 +59,63 @@ extension CoreDataStack: CoreDataStackProtocol {
                 persistentContainer = todoPersistentContainer
         }
         
-        do {
-            let storeURL = try await dropDatabase(database: database, persistentContainer: persistentContainer)
+        dropDatabase(database: database, persistentContainer: persistentContainer) { [weak self] storeURL, error in
+            guard let self else { return }
+            
+            if let error = error {
+                return completion(error)
+            }
+            
+            guard let storeURL = storeURL else {
+                return completion(.notFoundDatabaseFileURL(database: database))
+            }
+            
             logger.info("Все данные удалены!")
             
-            try removeDatabaseFaile(database: database, storeURL: storeURL)
-            logger.info("Удален файл базы данных!")
-            
-            reloadDatabase(database: database, persistentContainer: persistentContainer)
-            logger.info("База данных пересоздана!")
-        } catch let error as CoreDataStackOperationError {
-            operationError = error
-        } catch {
-            operationError = .unhandledError(nsError: error as NSError)
+            do {
+                try removeDatabaseFaile(database: database, storeURL: storeURL)
+                logger.info("Удален файл базы данных!")
+                
+                reloadDatabase(database: database, persistentContainer: persistentContainer)
+                logger.info("База данных пересоздана!")
+            } catch let error as CoreDataStackOperationError {
+                completion(error)
+            } catch {
+                completion(.unhandledError(nsError: error as NSError))
+            }
         }
-        
-        return operationError
     }
 }
 
 
 extension CoreDataStack {
-    private func dropDatabase(database: CoreDataDatabase, persistentContainer: NSPersistentContainer) async throws -> URL {
+    private func dropDatabase(
+        database: CoreDataDatabase,
+        persistentContainer: NSPersistentContainer,
+        completion: @escaping (URL?, CoreDataStackOperationError?) -> Void
+    ) {
         let operation = CoreDataStackOperation.dropDatabase(database: database)
-        var operationError: CoreDataStackOperationError
+        var operationError: CoreDataStackOperationError?
         logger.info(message: operation.logExecutionMessage())
         
         let storeCoordinator = persistentContainer.persistentStoreCoordinator
         guard let storeURL = persistentContainer.persistentStoreCoordinator.persistentStores.first?.url else {
             operationError = .notFoundDatabaseFileURL(database: database)
             logger.error(message: operation.logErrorMessage(error: operationError))
-            throw operationError
+            return completion(nil, operationError)
         }
 
-        do {
-            try await persistentContainer.performBackgroundTask { context in
+        persistentContainer.performBackgroundTask { context in
+            do {
                 try storeCoordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
                 logger.info(message: operation.logSuccessMessage())
+                completion(storeURL, nil)
+            } catch let nsError as NSError {
+                operationError = .databaseDropError(database: database, nsError: nsError)
+                logger.error(message: operation.logErrorMessage(error: operationError))
+                completion(nil, operationError)
             }
-        } catch let nsError as NSError {
-            operationError = .databaseDropError(database: database, nsError: nsError)
-            logger.error(message: operation.logErrorMessage(error: operationError))
-            throw operationError
         }
-        
-        return storeURL
     }
     
     

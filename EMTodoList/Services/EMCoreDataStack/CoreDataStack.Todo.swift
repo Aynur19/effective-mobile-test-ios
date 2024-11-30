@@ -13,7 +13,7 @@ public protocol CoreDataStackTodoProtocol {
         isCompleted: Bool?,
         startDate: Date?,
         endDate: Date?,
-        sortKeys: [(Todo.SortKeys, Bool)],
+        sortKeys: [(Todo.Keys, Bool)],
         completion: @escaping (Result<[Todo], CoreDataStackOperationError>) -> Void
     )
     
@@ -71,7 +71,7 @@ extension CoreDataStack: CoreDataStackTodoProtocol {
         isCompleted: Bool?,
         startDate: Date?,
         endDate: Date?,
-        sortKeys: [(Todo.SortKeys, Bool)],
+        sortKeys: [(Todo.Keys, Bool)],
         completion: @escaping (Result<[Todo], CoreDataStackOperationError>) -> Void
     ) {
         let operation = CoreDataStackOperation.fetchTodos

@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import EMCore
 
-@objc(TaskEntity)
+@objc(TodoCoreDataModel)
 public class TodoCoreDataModel: NSManagedObject { }
 
 extension TodoCoreDataModel {
@@ -70,7 +70,7 @@ extension TodoCoreDataModel {
         isCompleted = todo.isCompleted
     }
 
-    static func mapSortKeys(sortKeys: [(Todo.SortKeys, Bool)]) -> [(Keys, Bool)] {
+    static func mapSortKeys(sortKeys: [(Todo.Keys, Bool)]) -> [(Keys, Bool)] {
         sortKeys.map { item in
             return switch item.0 {
                 case .id:               (.id, item.1)

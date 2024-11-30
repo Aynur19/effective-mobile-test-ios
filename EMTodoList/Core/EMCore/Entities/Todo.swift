@@ -32,7 +32,7 @@ public struct Todo {
 }
 
 extension Todo {
-    public enum SortKeys: String {
+    public enum Keys: String {
         case id
         case name
         case description

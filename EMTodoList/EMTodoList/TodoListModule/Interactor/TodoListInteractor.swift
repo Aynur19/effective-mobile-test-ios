@@ -8,6 +8,7 @@
 import Foundation
 import OSLog
 import EMCore
+import EMCoreDataStack
 import EMNetworkingService
 import EMTodoApiService
 
@@ -15,7 +16,7 @@ fileprivate let logger = Logger(subsystem: "EMToDoList.TodoListModule", category
 
 class TodoListInteractor {
     private enum PreferencesKeys: String {
-        case todosDownloadFromApi
+        case todosIsDownloadFromApi
     }
     
     var presenter: TodoListPresenterInteractorProtocol!
@@ -24,8 +25,11 @@ class TodoListInteractor {
             sessionConfiguration: .default, requestConfiguration: .init(maxRetries: 3, firstDelay: 2)
         )
     )
-    
+    let userDefaults = UserDefaults.standard
     let todoList = TodoListEntity()
+    
+    var coreDataStackManager: EMCoreDataStackManager { ManagerProvider.shared.coreDataStackManager }
+    
     
     required init(presenter: TodoListPresenterInteractorProtocol) {
         self.presenter = presenter
@@ -35,22 +39,19 @@ class TodoListInteractor {
 
 extension TodoListInteractor: TodoListInteractorProtocol {
     func fetchTodos() {
-        
-        
-        guard let url = URL(string: AppConstants.todoApiUrlStr) else {
-            return print("Can't get todo API URL from url string!")
+        fetchTodosFromCoreData { [weak self] todos in
+            self?.updateTodos(todos: todos)
         }
         
-        todoApiService.fetchTodoList(url: url) { [weak self] result in
-            guard let self else { return }
-            
-            switch result {
-                case .success(let todos):
-                    todoList.todos = todos.map { .create(todo: $0) }
-                    presenter.didFetch(todos: todoList.todos)
+        if !userDefaults.bool(forKey: PreferencesKeys.todosIsDownloadFromApi.rawValue) {
+            fetchTodosFromNetwork { [weak self] todos in
+                self?.saveTodos(todos: todos) {
+                    self?.userDefaults.set(true, forKey: PreferencesKeys.todosIsDownloadFromApi.rawValue)
                     
-                case .failure(let error):
-                    print(error)
+                    self?.fetchTodosFromCoreData { todos in
+                        self?.updateTodos(todos: todos)
+                    }
+                }
             }
         }
     }
@@ -63,22 +64,54 @@ extension TodoListInteractor: TodoListInteractorProtocol {
 }
 
 extension TodoListInteractor {
-    private func fetchTodosFromNetwork(completion: @escaping ([TodoTableCellEntity]) -> Void) {
+    private func updateTodos(todos: [Todo]) {
+        todoList.todos = todos.map { .create(todo: $0) }
+        presenter.didFetch(todos: todoList.todos)
+    }
+    
+    private func fetchTodosFromNetwork(completion: @escaping ([Todo]) -> Void) {
         guard let url = URL(string: AppConstants.todoApiUrlStr) else {
             return logger.error(message: "Не удалось получить URL из строки для загрузки задач из сервера!")
         }
         
-        todoApiService.fetchTodoList(url: url) { [weak self] result in
-            guard let self else { return }
-            
+        logger.error(message: "Запрос на получение данных из сервера...")
+        todoApiService.fetchTodoList(url: url) { result in
             switch result {
                 case .success(let todos):
-                    todoList.todos = todos.map { .create(todo: $0) }
-                    completion(todoList.todos)
+                    completion(todos)
                     
                 case .failure(let error):
-                    print(error)
+                    logger.error(message: error.debugMessage)
             }
+        }
+    }
+    
+    private func fetchTodosFromCoreData(completion: @escaping ([Todo]) -> Void) {
+        logger.error(message: "Запрос на получение данных из CoreData...")
+        
+        coreDataStackManager.fetchTodos(
+            isCompleted: nil,
+            startDate: nil,
+            endDate: nil,
+            sortKeys: []
+        ) { result in
+            switch result {
+                case .success(let todos):
+                    completion(todos)
+                    
+                case .failure(let error):
+                    logger.error(message: error.debugMessage)
+            }
+        }
+    }
+    
+    private func saveTodos(todos: [Todo], completion: @escaping () -> Void) {
+        coreDataStackManager.saveTodos(todos) { error in
+            if let error = error {
+                return logger.error(message: error.debugMessage)
+            }
+            
+            completion()
         }
     }
 }

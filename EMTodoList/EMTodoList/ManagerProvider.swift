@@ -11,10 +11,10 @@ import EMCore
 import EMNetworkingService
 import EMCoreDataStack
 
-typealias ALCoreDataStackManager = CoreDataStackProtocol
+typealias EMCoreDataStackManager = CoreDataStackProtocol & CoreDataStackTodoProtocol
 
 public final class ManagerProvider {
-    let coreDataStackManager: ALCoreDataStackManager
+    let coreDataStackManager: EMCoreDataStackManager
     
     init(
         todoPersistentContainer: NSPersistentContainer

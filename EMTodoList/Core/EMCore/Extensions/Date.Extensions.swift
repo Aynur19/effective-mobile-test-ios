@@ -8,7 +8,7 @@
 import Foundation
 
 extension Date {
-    public var taskShortDate: String {
+    public var todoShortDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yy"
         

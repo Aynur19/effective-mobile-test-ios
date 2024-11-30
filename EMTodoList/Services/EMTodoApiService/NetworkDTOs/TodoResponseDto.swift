@@ -14,7 +14,7 @@ public struct TodoResponseDto {
 
 extension TodoResponseDto: Decodable {
     enum CodingKeys: String, CodingKey {
-        case id         = "log"
+        case id         = "id"
         case todo       = "todo"
         case completed  = "completed"
         case userId     = "userId"

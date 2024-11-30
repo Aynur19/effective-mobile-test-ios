@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "task" : {
+    "todo" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -18,7 +18,7 @@
         }
       }
     },
-    "taskDescription" : {
+    "todoDescription" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -35,7 +35,7 @@
         }
       }
     },
-    "taskName" : {
+    "todoName" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

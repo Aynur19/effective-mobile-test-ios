@@ -46,11 +46,11 @@ class TodoDetailViewController: UIViewController {
     }()
     
     // MARK: Task Name
-    private lazy var taskNameTextField: UITextField = {
+    private lazy var todoNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = TaskDetailAssets.Strings.taskName.string
+        textField.placeholder = TodoDetailAssets.Strings.todoName.string
         textField.font = UIFont.boldSystemFont(ofSize: 34)
-        textField.textColor = TaskDetailAssets.Colors.taskNameFg.color
+        textField.textColor = TodoDetailAssets.Colors.todoNameFg.color
         textField.textAlignment = .left
         textField.borderStyle = .none
         textField.returnKeyType = .done
@@ -63,7 +63,7 @@ class TodoDetailViewController: UIViewController {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = TaskDetailAssets.Colors.taskCreatedOnFg.color
+        label.textColor = TodoDetailAssets.Colors.todoCreatedOnFg.color
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -85,7 +85,7 @@ class TodoDetailViewController: UIViewController {
     private lazy var taskDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textView.textColor = TaskDetailAssets.Colors.taskDescriptionFg.color
+        textView.textColor = TodoDetailAssets.Colors.todoDescriptionFg.color
         textView.textAlignment = .natural
         textView.returnKeyType = .done
         
@@ -108,7 +108,7 @@ class TodoDetailViewController: UIViewController {
                 NSAttributedString.Key.kern: -0.43,
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular),
-                NSAttributedString.Key.foregroundColor: TaskDetailAssets.Colors.taskDescriptionFg.color,
+                NSAttributedString.Key.foregroundColor: TodoDetailAssets.Colors.todoDescriptionFg.color,
             ]
         )
     }
@@ -116,12 +116,12 @@ class TodoDetailViewController: UIViewController {
 
 extension TodoDetailViewController: TodoDetailViewProtocol {
     func showTask(_ task: TodoDetailEntity) {
-        taskNameTextField.text = task.name
+        todoNameTextField.text = task.name
         
-        let createdOnText = taskCreatedOnAttributedText(task.createdOn.taskShortDate)
+        let createdOnText = taskCreatedOnAttributedText(task.createdOn.todoShortDate)
         taskCreatedOnLabel.attributedText = createdOnText
         
-        let descriptionText = taskDescriptionAttributedText(task.taskDescription)
+        let descriptionText = taskDescriptionAttributedText(task.description)
         taskDescriptionTextView.attributedText = descriptionText
     }
 }
@@ -131,11 +131,11 @@ extension TodoDetailViewController {
         view.backgroundColor = .systemBackground
         
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = TaskDetailAssets.Strings.task.string
-        navigationItem.titleView?.tintColor = TaskDetailAssets.Colors.taskNameFg.color
+        navigationItem.title = TodoDetailAssets.Strings.todo.string
+        navigationItem.titleView?.tintColor = TodoDetailAssets.Colors.todoNameFg.color
         
         view.addSubview(stackView)
-        stackView.addArrangedSubview(taskNameTextField)
+        stackView.addArrangedSubview(todoNameTextField)
         stackView.addArrangedSubview(taskCreatedOnLabel)
         stackView.addArrangedSubview(taskDescriptionTextView)
     }
@@ -172,10 +172,10 @@ extension TodoDetailViewController {
     
     func setupTaskNameTextFieldConstraints() {
         NSLayoutConstraint.activate([
-            taskNameTextField.topAnchor.constraint(equalTo: stackView.topAnchor),
-            taskNameTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            taskNameTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            taskNameTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            todoNameTextField.topAnchor.constraint(equalTo: stackView.topAnchor),
+            todoNameTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            todoNameTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            todoNameTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor),
         ])
     }
     

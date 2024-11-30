@@ -10,12 +10,6 @@ import EMCore
 import EMNetworkingService
 import EMTodoApiService
 
-protocol TodoListInteractorProtocol: AnyObject {
-    func fetchTodos()
-    
-    func completeTodo(todoId: Int64)
-}
-
 class TodoListInteractor {
     var presenter: TodoListPresenterInteractorProtocol!
     let todoApiService: TodoApiServiceProtocol = TodoApiService(

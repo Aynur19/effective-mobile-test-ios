@@ -8,29 +8,6 @@
 import Foundation
 import EMCore
 
-//protocol TodoListPresenterProtocol: AnyObject {
-//    func viewDidLoad()
-//        
-//    func didFetch(todos: [TodoDetailEntity])
-//    
-//    func didTapIsCompleted(todoId: Int64)
-//    
-//    func didSelectTodo(at index: Int)
-//}
-
-protocol TodoListPresenterViewProtocol: AnyObject {
-    func viewDidLoad()
-    
-    func didTapIsCompleted(todoId: Int64)
-}
-
-protocol TodoListPresenterInteractorProtocol: AnyObject {
-    func didFetch(todos: [TodoTableCellEntity])
-    
-    func didUpdated(todo: TodoTableCellEntity)
-}
-
-
 class TodoListPresenter {
     weak var view: TodoListViewProtocol?
     var interactor: TodoListInteractorProtocol!

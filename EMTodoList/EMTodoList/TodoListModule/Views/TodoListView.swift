@@ -8,12 +8,6 @@
 import Foundation
 import UIKit
 
-protocol TodoListViewProtocol: AnyObject {
-    func show(todos: [TodoTableCellEntity])
-    
-    func update(todo: TodoTableCellEntity)
-}
-
 class TodoListViewController: UIViewController {
     var presenter: TodoListPresenterViewProtocol!
     let configurator: TodoListConfiguratorProtocol = TodoListConfigurator()

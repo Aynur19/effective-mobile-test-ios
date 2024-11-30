@@ -8,14 +8,6 @@
 import Foundation
 import UIKit
 
-protocol TodoTableCellViewDelegate: AnyObject {
-    func didTapIsCompleted(for todoId: Int64)
-}
-
-protocol TodoTableCellViewProtocol {
-    func show(todo: TodoTableCellEntity)
-}
-
 class TodoTableCellView: UITableViewCell {
     weak var delegate: TodoTableCellViewDelegate?
     private var todoId: Int64?

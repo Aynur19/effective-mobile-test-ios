@@ -9,12 +9,12 @@ import Foundation
 import EMCore
 
 public enum CoreDataStackOperation {
-    case fetchTasks
-    case saveTasks
+    case fetchTodos
+    case saveTodos
     
-    case fetchTask
-    case saveTask
-    case deleteTask
+    case fetchTodo
+    case saveTodo
+    case deleteTodo
     
     case dropDatabase(database: CoreDataDatabase)
     case removeDatabaseFile(database: CoreDataDatabase)
@@ -25,12 +25,12 @@ public enum CoreDataStackOperation {
 extension CoreDataStackOperation: OperationProtocol {
     public var id: Int {
         switch self {
-            case .fetchTasks:                   101
-            case .saveTasks:                    102
+            case .fetchTodos:                   101
+            case .saveTodos:                    102
                 
-            case .fetchTask:                    201
-            case .saveTask:                     202
-            case .deleteTask:                   203
+            case .fetchTodo:                    201
+            case .saveTodo:                     202
+            case .deleteTodo:                   203
                 
             case .dropDatabase(.todo):          1001
             case .removeDatabaseFile(.todo):    1002
@@ -40,20 +40,20 @@ extension CoreDataStackOperation: OperationProtocol {
     
     public var name: String {
         switch self {
-            case .fetchTasks:
+            case .fetchTodos:
                 "Запрос на получение списка задач пользователя (Core Data)"
                 
-            case .saveTasks:
+            case .saveTodos:
                 "Запрос на сохранение списка задач пользователя (Core Data)"
                 
                 
-            case .fetchTask:
+            case .fetchTodo:
                 "Запрос на получение конкретной задачи (Core Data)"
                 
-            case .saveTask:
+            case .saveTodo:
                 "Запрос на сохранение конкретной задачи (Core Data)"
                 
-            case .deleteTask:
+            case .deleteTodo:
                 "Запрос на удаление конкретной задачи (Core Data)"
                 
                 

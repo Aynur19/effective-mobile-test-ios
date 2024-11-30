@@ -72,6 +72,7 @@
 		D7AEB7BE2CFB440B00691663 /* TodoListInteractorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7BD2CFB440B00691663 /* TodoListInteractorProtocols.swift */; };
 		D7AEB7C02CFB443F00691663 /* TodoListRouterProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7BF2CFB443F00691663 /* TodoListRouterProtocols.swift */; };
 		D7AEB7C22CFB445C00691663 /* TodoListConfiguratorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7C12CFB445C00691663 /* TodoListConfiguratorProtocols.swift */; };
+		D7AEB7C62CFB58E500691663 /* CoreDataStack.Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7C52CFB58E500691663 /* CoreDataStack.Todo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,6 +196,7 @@
 		D7AEB7BD2CFB440B00691663 /* TodoListInteractorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListInteractorProtocols.swift; sourceTree = "<group>"; };
 		D7AEB7BF2CFB443F00691663 /* TodoListRouterProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListRouterProtocols.swift; sourceTree = "<group>"; };
 		D7AEB7C12CFB445C00691663 /* TodoListConfiguratorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListConfiguratorProtocols.swift; sourceTree = "<group>"; };
+		D7AEB7C52CFB58E500691663 /* CoreDataStack.Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.Todo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,6 +333,7 @@
 			children = (
 				D7277FD22CF79F3300AE853A /* Base */,
 				D7277FC32CF7919F00AE853A /* CoreDataStack.swift */,
+				D7AEB7C52CFB58E500691663 /* CoreDataStack.Todo.swift */,
 				D7277FD02CF79ED400AE853A /* CoreDataStackOperation.swift */,
 				D7277FCD2CF79E5200AE853A /* CoreDataStackOperationError.swift */,
 			);
@@ -798,6 +801,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7AEB7C62CFB58E500691663 /* CoreDataStack.Todo.swift in Sources */,
 				D7277FCC2CF7925D00AE853A /* TodoCoreDataModel.swift in Sources */,
 				D7277FD12CF79ED400AE853A /* CoreDataStackOperation.swift in Sources */,
 				D7277FCE2CF79E5200AE853A /* CoreDataStackOperationError.swift in Sources */,

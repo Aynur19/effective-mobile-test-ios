@@ -34,7 +34,7 @@ extension TodoCoreDataModel {
     enum Keys: String {
         case id
         case name
-        case taskDescription
+        case todoDescription
         case createdOn
         case isCompleted
 
@@ -53,7 +53,7 @@ extension TodoCoreDataModel {
     }
 
 
-    var emTask: Todo {
+    var todo: Todo {
         Todo(
             id: id,
             name: name,    
@@ -62,12 +62,30 @@ extension TodoCoreDataModel {
             isCompleted: isCompleted
         )
     }
+    
+    func update(todo: Todo) {
+        name = todo.name
+        todoDescription = todo.description
+        createdOn = todo.createdOn
+        isCompleted = todo.isCompleted
+    }
 
+    static func mapSortKeys(sortKeys: [(Todo.SortKeys, Bool)]) -> [(Keys, Bool)] {
+        sortKeys.map { item in
+            return switch item.0 {
+                case .id:               (.id, item.1)
+                case .name:             (.name, item.1)
+                case .description:      (.todoDescription, item.1)
+                case .createdOn:        (.createdOn, item.1)
+                case .isCompleted:      (.isCompleted, item.1)
+            }
+        }
+    }
 
-    static func geTaskFetchRequest(taskId: Int64) -> NSFetchRequest<TodoCoreDataModel> {
+    static func getTodoFetchRequest(todoId: Int64) -> NSFetchRequest<TodoCoreDataModel> {
         let fetchRequest = TodoCoreDataModel.fetchRequest()
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            getIdPredicate(taskId),
+            getIdPredicate(todoId),
         ])
         fetchRequest.fetchLimit = 1
 
@@ -75,7 +93,7 @@ extension TodoCoreDataModel {
     }
 
 
-    static func getTaskFetchRequest(
+    static func getTodoFetchRequest(
         isCompleted: Bool?,
         startDate: Date?,
         endDate: Date?,

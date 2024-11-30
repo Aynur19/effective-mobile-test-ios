@@ -30,3 +30,13 @@ public struct Todo {
         self.isCompleted = isCompleted
     }
 }
+
+extension Todo {
+    public enum SortKeys: String {
+        case id
+        case name
+        case description
+        case createdOn
+        case isCompleted
+    }
+}

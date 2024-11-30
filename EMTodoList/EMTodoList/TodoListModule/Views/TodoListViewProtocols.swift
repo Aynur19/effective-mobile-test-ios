@@ -11,7 +11,7 @@ protocol TodoTableCellViewDelegate: AnyObject {
 
 
 protocol TodoTableCellViewProtocol {
-    func show(todo: TodoTableCellEntity)
+    func show(todo: TodoTableCellEntity, searchText: String)
 }
 
 

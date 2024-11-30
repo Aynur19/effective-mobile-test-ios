@@ -9,6 +9,8 @@ protocol TodoListPresenterViewProtocol: AnyObject {
     func viewDidLoad()
     
     func didTapIsCompleted(todoId: Int64)
+    
+    func didEnterSearch(searchText: String)
 }
 
 protocol TodoListPresenterInteractorProtocol: AnyObject {

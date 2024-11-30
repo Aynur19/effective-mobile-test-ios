@@ -26,6 +26,14 @@ extension TodoListPresenter: TodoListPresenterViewProtocol {
     func didTapIsCompleted(todoId: Int64) {
         interactor.completeTodo(todoId: todoId)
     }
+    
+    func didEnterSearch(searchText: String) {
+        if searchText.isEmpty {
+            interactor.fetchTodos()
+        } else {
+            interactor.fetchTodos(searchText: searchText)
+        }
+    }
 }
     
 

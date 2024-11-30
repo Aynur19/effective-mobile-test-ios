@@ -151,12 +151,12 @@ class TodoTableCellView: UITableViewCell {
 
 
 extension TodoTableCellView: TodoTableCellViewProtocol {
-    func show(todo: TodoTableCellEntity) {
+    func show(todo: TodoTableCellEntity, searchText: String = "") {
         todoId = todo.id
         configureIsCompletedImageView(todo.isCompleted)
-        configureNameLabel(todo.name, isCompleted: todo.isCompleted)
-        configureDescriptionLabel(todo.description, isCompleted: todo.isCompleted)
-        createdOnLabel.text = todo.createdOn
+        configureNameLabel(todo.name, isCompleted: todo.isCompleted, searchText: searchText)
+        configureDescriptionLabel(todo.description, isCompleted: todo.isCompleted, searchText: searchText)
+        configureCreatedOnLabel(todo.createdOn, searchText: searchText)
     }
     
     private func configureIsCompletedImageView(_ isCompleted: Bool) {
@@ -169,36 +169,45 @@ extension TodoTableCellView: TodoTableCellViewProtocol {
         }
     }
     
-    private func configureNameLabel(_ name: String, isCompleted: Bool) {
+    private func configureNameLabel(_ name: String, isCompleted: Bool, searchText: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.15
+        let fontSize: CGFloat = 16
         
         let strikethroughStyle = isCompleted ? NSUnderlineStyle.single.rawValue : 0
         let foregroundColor = isCompleted
         ? TodoTableCellAssets.Colors.todoIsCompletedLabelsFg.color
         : TodoTableCellAssets.Colors.todoIsNotCompletedLabelsFg.color
         
-        nameLabel.attributedText = NSMutableAttributedString(
+        let attributedText = NSMutableAttributedString(
             string: name,
             attributes: [
                 NSAttributedString.Key.strikethroughStyle: strikethroughStyle,
                 NSAttributedString.Key.kern: -0.43,
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,
                 NSAttributedString.Key.foregroundColor: foregroundColor,
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: .medium)
             ]
+        )
+        
+        nameLabel.attributedText = highlightMatchedText(
+            attributedString: attributedText,
+            fullText: name,
+            searchText: searchText,
+            fontSize: fontSize
         )
     }
     
-    private func configureDescriptionLabel(_ description: String, isCompleted: Bool) {
+    private func configureDescriptionLabel(_ description: String, isCompleted: Bool, searchText: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.12
+        let fontSize: CGFloat = 12
         
         let foregroundColor = isCompleted
         ? TodoTableCellAssets.Colors.todoIsCompletedLabelsFg.color
         : TodoTableCellAssets.Colors.todoIsNotCompletedLabelsFg.color
         
-        descriptionLabel.attributedText = NSMutableAttributedString(
+        let attributedText = NSMutableAttributedString(
             string: description,
             attributes: [
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,
@@ -206,5 +215,58 @@ extension TodoTableCellView: TodoTableCellViewProtocol {
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .regular)
             ]
         )
+        
+        descriptionLabel.attributedText = highlightMatchedText(
+            attributedString: attributedText,
+            fullText: description,
+            searchText: searchText,
+            fontSize: fontSize
+        )
+    }
+    
+    private func configureCreatedOnLabel(_ createdOn: String, searchText: String) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.12
+        let fontSize: CGFloat = 12
+        
+        let attributedText = NSMutableAttributedString(
+            string: createdOn,
+            attributes: [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                NSAttributedString.Key.foregroundColor: TodoTableCellAssets.Colors.todoCreatedOnFg.color,
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: .regular)
+            ]
+        )
+        
+        createdOnLabel.attributedText = highlightMatchedText(
+            attributedString: attributedText,
+            fullText: createdOn,
+            searchText: searchText,
+            fontSize: fontSize
+        )
+    }
+    
+    func highlightMatchedText(
+        attributedString: NSMutableAttributedString,
+        fullText: String,
+        searchText: String,
+        fontSize: CGFloat
+    ) -> NSAttributedString {
+        guard !searchText.isEmpty else { return attributedString }
+        
+        let range = (fullText as NSString).range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive])
+        
+        if range.location != NSNotFound {
+            attributedString.addAttributes(
+                [
+                    NSAttributedString.Key.foregroundColor: UIColor.accent,
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: .bold)
+                    
+                ],
+                range: range
+            )
+        }
+        
+        return attributedString
     }
 }

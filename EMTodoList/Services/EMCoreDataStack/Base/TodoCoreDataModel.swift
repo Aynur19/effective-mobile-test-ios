@@ -21,6 +21,7 @@ extension TodoCoreDataModel {
     @NSManaged public var id: Int64
     @NSManaged public var name: String
     @NSManaged public var createdOn: Date
+    @NSManaged public var createdOnStr: String
     @NSManaged public var isCompleted: Bool
     @NSManaged public var todoDescription: String
 }
@@ -36,6 +37,7 @@ extension TodoCoreDataModel {
         case name
         case todoDescription
         case createdOn
+        case createdOnStr
         case isCompleted
 
         var key: String { self.rawValue }
@@ -47,6 +49,7 @@ extension TodoCoreDataModel {
         todoModel.name = todo.name
         todoModel.todoDescription = todo.description
         todoModel.createdOn = todo.createdOn
+        todoModel.createdOnStr = todo.createdOn.todoShortDate
         todoModel.isCompleted = todo.isCompleted
 
         return todoModel
@@ -91,8 +94,8 @@ extension TodoCoreDataModel {
 
         return fetchRequest
     }
-
-
+    
+    
     static func getTodoFetchRequest(
         isCompleted: Bool?,
         startDate: Date?,
@@ -100,6 +103,22 @@ extension TodoCoreDataModel {
         sortKeys: [(TodoCoreDataModel.Keys, Bool)]
     ) -> NSFetchRequest<TodoCoreDataModel> {
         let predicates = getPredicates(isCompleted: isCompleted, startDate: startDate, endDate: endDate)
+        
+        let fetchRequest = TodoCoreDataModel.fetchRequest()
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        fetchRequest.sortDescriptors = sortKeys.map { getSortDescriptor($0.0, ascending: $0.1) }
+
+        return fetchRequest
+    }
+    
+    
+    static func getTodoFetchRequest(
+        searchText: String,
+        sortKeys: [(TodoCoreDataModel.Keys, Bool)]
+    ) -> NSFetchRequest<TodoCoreDataModel> {
+        let predicates = [
+            getSearchTextPredicate(searchText)
+        ]
         
         let fetchRequest = TodoCoreDataModel.fetchRequest()
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
@@ -139,6 +158,19 @@ extension TodoCoreDataModel {
     
     private static func getCreatedOnEndPredicate(_ endDate: Date) -> NSPredicate {
         NSPredicate(format: "\(Keys.isCompleted.key) <= %@", endDate as NSDate)
+    }
+    
+    private static func getSearchTextPredicate(_ searchText: String) -> NSPredicate {
+        let nameKey = TodoCoreDataModel.Keys.name.key
+        let descriptionKey = TodoCoreDataModel.Keys.todoDescription.key
+        let createdOnStrKey = TodoCoreDataModel.Keys.createdOnStr.key
+        
+        let nsSearchText = searchText as NSString
+        
+        return NSPredicate(
+            format: "\(nameKey) CONTAINS[cd] %@ OR \(descriptionKey) CONTAINS[cd] %@ OR \(createdOnStrKey) CONTAINS[cd] %@",
+            nsSearchText, nsSearchText, nsSearchText
+        )
     }
     
     private static func getSortDescriptor(_ key: Keys, ascending: Bool) -> NSSortDescriptor {

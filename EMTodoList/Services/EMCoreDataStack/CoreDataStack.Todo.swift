@@ -17,6 +17,12 @@ public protocol CoreDataStackTodoProtocol {
         completion: @escaping (Result<[Todo], CoreDataStackOperationError>) -> Void
     )
     
+    func fetchTodos(
+        searchText: String,
+        sortKeys: [(Todo.Keys, Bool)],
+        completion: @escaping (Result<[Todo], CoreDataStackOperationError>) -> Void
+    )
+    
     func saveTodos(
         _ todos: [Todo],
         completion: @escaping (CoreDataStackOperationError?) -> Void
@@ -74,7 +80,7 @@ extension CoreDataStack: CoreDataStackTodoProtocol {
         sortKeys: [(Todo.Keys, Bool)],
         completion: @escaping (Result<[Todo], CoreDataStackOperationError>) -> Void
     ) {
-        let operation = CoreDataStackOperation.fetchTodos
+        let operation = CoreDataStackOperation.searchTodos
         let context = todoPersistentContainer.newBackgroundContext()
         logger.info(message: operation.logExecutionMessage())
         
@@ -89,6 +95,37 @@ extension CoreDataStack: CoreDataStackTodoProtocol {
                     isCompleted: isCompleted,
                     startDate: startDate,
                     endDate: endDate,
+                    sortKeys: TodoCoreDataModel.mapSortKeys(sortKeys: sortKeys)
+                ).map { $0.todo }
+                
+                logger.info(message: operation.logSuccessMessage())
+                return completion(.success(fetchedTodos))
+            } catch let error as CoreDataStackOperationError {
+                return completion(.failure(getLoggedError(for: operation, error: error)))
+            } catch let nsError as NSError {
+                return completion(.failure(getLoggedError(for: operation, error: .fetchError(nsError: nsError))))
+            }
+        }
+    }
+    
+    public func fetchTodos(
+        searchText: String,
+        sortKeys: [(Todo.Keys, Bool)],
+        completion: @escaping (Result<[Todo], CoreDataStackOperationError>) -> Void
+    ) {
+        let operation = CoreDataStackOperation.fetchTodos
+        let context = todoPersistentContainer.newBackgroundContext()
+        logger.info(message: operation.logExecutionMessage())
+        
+        context.perform { [weak self] in
+            guard let self else {
+                return completion(.failure(getLoggedServiceNilError(for: operation)))
+            }
+            
+            do {
+                let fetchedTodos = try fetchTodosRequest(
+                    context,
+                    searchText: searchText,
                     sortKeys: TodoCoreDataModel.mapSortKeys(sortKeys: sortKeys)
                 ).map { $0.todo }
                 
@@ -203,6 +240,24 @@ extension CoreDataStack {
     }
     
     
+    private func fetchTodosRequest(
+        _ context: NSManagedObjectContext,
+        searchText: String,
+        sortKeys: [(TodoCoreDataModel.Keys, Bool)]
+    ) throws -> [TodoCoreDataModel]  {
+        do {
+            let fetchRequest = TodoCoreDataModel.getTodoFetchRequest(
+                searchText: searchText,
+                sortKeys: sortKeys
+            )
+            
+            return try context.fetch(fetchRequest)
+        } catch let nsError as NSError {
+            throw CoreDataStackOperationError.fetchError(nsError: nsError)
+        }
+    }
+    
+    
     private func saveTodosRequest(
         _ context: NSManagedObjectContext,
         todos: [Todo]
@@ -221,9 +276,8 @@ extension CoreDataStack {
             if let existingTodo = existingTodosDict[todo.id] {
                 existingTodo.update(todo: todo)
             } else {
-                let newObject = TodoCoreDataModel.create(context: context, todo: todo)
+                _ = TodoCoreDataModel.create(context: context, todo: todo)
             }
-
 
             if context.hasChanges {
                 try context.save()

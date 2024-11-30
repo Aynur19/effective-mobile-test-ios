@@ -56,6 +56,12 @@ extension TodoListInteractor: TodoListInteractorProtocol {
         }
     }
     
+    func fetchTodos(searchText: String) {
+        searchTodos(searchText: searchText) { [weak self] todos in
+            self?.updateTodos(todos: todos)
+        }
+    }
+    
     func completeTodo(todoId: Int64) {
         guard let todo = todoList.complete(todoId: todoId) else { return }
         
@@ -93,6 +99,23 @@ extension TodoListInteractor {
             isCompleted: nil,
             startDate: nil,
             endDate: nil,
+            sortKeys: []
+        ) { result in
+            switch result {
+                case .success(let todos):
+                    completion(todos)
+                    
+                case .failure(let error):
+                    logger.error(message: error.debugMessage)
+            }
+        }
+    }
+    
+    private func searchTodos(searchText: String, completion: @escaping ([Todo]) -> Void) {
+        logger.error(message: "Запрос на получение данных из CoreData по поисковой строке...")
+        
+        coreDataStackManager.fetchTodos(
+            searchText: searchText,
             sortKeys: []
         ) { result in
             switch result {

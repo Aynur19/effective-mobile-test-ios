@@ -10,6 +10,7 @@ import EMCore
 
 public enum CoreDataStackOperation {
     case fetchTodos
+    case searchTodos
     case saveTodos
     
     case fetchTodo
@@ -26,7 +27,8 @@ extension CoreDataStackOperation: OperationProtocol {
     public var id: Int {
         switch self {
             case .fetchTodos:                   101
-            case .saveTodos:                    102
+            case .searchTodos:                  102
+            case .saveTodos:                    103
                 
             case .fetchTodo:                    201
             case .saveTodo:                     202
@@ -42,6 +44,9 @@ extension CoreDataStackOperation: OperationProtocol {
         switch self {
             case .fetchTodos:
                 "Запрос на получение списка задач пользователя (Core Data)"
+                
+            case .searchTodos:
+                "Запрос на получение списка задач пользователя по поисковой строке (Core Data)"
                 
             case .saveTodos:
                 "Запрос на сохранение списка задач пользователя (Core Data)"

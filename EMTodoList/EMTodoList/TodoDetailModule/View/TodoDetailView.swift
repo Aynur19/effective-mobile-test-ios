@@ -159,10 +159,10 @@ extension TodoDetailViewController: TodoDetailViewPresenterProtocol {
 
 extension TodoDetailViewController {
     private func setupUI() {
-        view.backgroundColor = .systemBackground
-        
+//        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = TodoDetailAssets.Strings.todo.string
+        
+        title = TodoDetailAssets.Strings.todo.string
         navigationItem.titleView?.tintColor = TodoDetailAssets.Colors.todoNameFg.color
         
         view.addSubview(stackView)

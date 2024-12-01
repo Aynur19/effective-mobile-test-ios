@@ -11,6 +11,8 @@ protocol TodoListPresenterViewProtocol: AnyObject {
     func didTapIsCompleted(todoId: Int64)
     
     func didEnterSearch(searchText: String)
+    
+    func didSelectTodo(todoId: Int64)
 }
 
 protocol TodoListPresenterInteractorProtocol: AnyObject {

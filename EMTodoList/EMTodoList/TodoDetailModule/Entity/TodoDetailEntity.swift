@@ -20,6 +20,18 @@ struct TodoDetailEntity {
 
 
 extension TodoDetailEntity {
+    static func getNewEmpty() -> Self {
+        let createdOn = Date.now
+        
+        return .init(
+            id: createdOn.msTimestamp,
+            name: "",
+            description: "",
+            createdOn: createdOn,
+            isCompleted: false
+        )
+    }
+    
     static func create(todo: Todo) -> Self {
         .init(
             id: todo.id,

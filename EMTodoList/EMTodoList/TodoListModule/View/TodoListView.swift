@@ -96,7 +96,8 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        presenter?.didSelectTodo(at: indexPath.row)
+        let todoId = todos[indexPath.row].id
+        presenter.didSelectTodo(todoId: todoId)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

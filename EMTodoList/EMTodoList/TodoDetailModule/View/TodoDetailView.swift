@@ -7,18 +7,13 @@
 
 import UIKit
 
-protocol TodoDetailViewProtocol: AnyObject {
-    func showTask(_ task: TodoDetailEntity)
-}
-
 class TodoDetailViewController: UIViewController {
-    var presenter: TodoDetailPresenterProtocol!
-    let configurator: TodoDetailConfiguratorProtocol = TodoDetailConfigurator()
+    private var presenter: TodoDetailPresenterViewProtocol!
+    private var todoId: Int64!
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private var headerHeightConstraint: NSLayoutConstraint?
     private let maxHeaderHeight: CGFloat = 150
     private let minHeaderHeight: CGFloat = 60
 
@@ -29,7 +24,7 @@ class TodoDetailViewController: UIViewController {
         setupUI()
         setupConstraints()
         setipSubscriptions()
-        presenter.viewDidLoad()
+        presenter.viewDidLoad(for: todoId)
     }
     
     deinit {
@@ -114,14 +109,34 @@ class TodoDetailViewController: UIViewController {
     }
 }
 
-extension TodoDetailViewController: TodoDetailViewProtocol {
-    func showTask(_ task: TodoDetailEntity) {
-        todoNameTextField.text = task.name
+extension TodoDetailViewController: TodoDetailViewConfiguratorProtocol {
+    func configure(todoId: Int64?, presenter: TodoDetailPresenterViewProtocol) {
+        self.presenter = presenter
+        self.todoId = todoId ?? 0
+    }
+}
+
+
+extension TodoDetailViewController: TodoDetailViewPresenterProtocol {
+    func show(todo: TodoDetailEntity?) {
+        guard let todo else {
+            let alertController = UIAlertController(
+                title: NotificationsAssets.Strings.titleError.string,
+                message: NotificationsAssets.Strings.messageNotFetchTodoByIdError.string,
+                preferredStyle: .alert
+            )
+            
+            alertController.addAction(.init(title: "OK", style: .default))
+            
+            return present(alertController, animated: true)
+        }
         
-        let createdOnText = taskCreatedOnAttributedText(task.createdOn.todoShortDate)
+        todoNameTextField.text = todo.name
+        
+        let createdOnText = taskCreatedOnAttributedText(todo.createdOn.todoShortDate)
         taskCreatedOnLabel.attributedText = createdOnText
         
-        let descriptionText = taskDescriptionAttributedText(task.description)
+        let descriptionText = taskDescriptionAttributedText(todo.description)
         taskDescriptionTextView.attributedText = descriptionText
     }
 }

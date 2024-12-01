@@ -31,7 +31,7 @@ public protocol CoreDataStackTodoProtocol {
     
     func fetchTodo(
         by id: Int64,
-        completion: @escaping (Result<Todo?, CoreDataStackOperationError>) -> Void
+        completion: @escaping (Result<Todo, CoreDataStackOperationError>) -> Void
     )
     
     func deleteTodo(
@@ -163,13 +163,15 @@ extension CoreDataStack: CoreDataStackTodoProtocol {
     }
     
 
-    public func fetchTodo(by id: Int64, completion: @escaping (Result<Todo?, CoreDataStackOperationError>) -> Void) {
+    public func fetchTodo(by id: Int64, completion: @escaping (Result<Todo, CoreDataStackOperationError>) -> Void) {
         let operation = CoreDataStackOperation.fetchTodo
         let context = todoPersistentContainer.newBackgroundContext()
         logger.info(message: operation.logExecutionMessage())
         
         do {
-            let fetchedTodo = try fetchTodoRequest(context, todoId: id)?.todo
+            guard let fetchedTodo = try fetchTodoRequest(context, todoId: id)?.todo else {
+                return completion(.failure(.notFoundByIdError(id: String(id))))
+            }
             
             logger.info(message: operation.logSuccessMessage())
             return completion(.success(fetchedTodo))

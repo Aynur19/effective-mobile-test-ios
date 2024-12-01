@@ -14,4 +14,8 @@ extension Date {
         
         return dateFormatter.string(from: self)
     }
+    
+    public var msTimestamp: Int64 {
+        Int64(timeIntervalSince1970 * 1000)
+    }
 }

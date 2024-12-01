@@ -34,6 +34,10 @@ extension TodoListPresenter: TodoListPresenterViewProtocol {
             interactor.fetchTodos(searchText: searchText)
         }
     }
+    
+    func didSelectTodo(todoId: Int64) {
+        router.navigateToTodoDetail(for: todoId)
+    }
 }
     
 

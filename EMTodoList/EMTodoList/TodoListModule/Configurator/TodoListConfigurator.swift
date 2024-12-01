@@ -6,6 +6,10 @@
 //
 
 class TodoListConfigurator: TodoListConfiguratorProtocol {
+    static func createModule(with todo: TodoListEntity) {
+        let viewController = TodoListViewController()
+    }
+    
     func configure(with viewController: TodoListViewController) {
         let presenter = TodoListPresenter(view: viewController)
         let interactor = TodoListInteractor(presenter: presenter)

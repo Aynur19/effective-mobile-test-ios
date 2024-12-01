@@ -81,6 +81,8 @@
 		D7AEB7D82CFC5FAD00691663 /* TodoDetailInteractorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7D72CFC5FAD00691663 /* TodoDetailInteractorProtocols.swift */; };
 		D7AEB7DC2CFC7A9300691663 /* TodoDetailConfiguratorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7DB2CFC7A9300691663 /* TodoDetailConfiguratorProtocols.swift */; };
 		D7AEB7DE2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7DD2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift */; };
+		D7AEB7E02CFCBCA600691663 /* ContextMenu.Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D7AEB7DF2CFCBCA600691663 /* ContextMenu.Localizable.xcstrings */; };
+		D7AEB7E22CFCBCF600691663 /* ContextMenuAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7E12CFCBCF600691663 /* ContextMenuAssets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,6 +215,8 @@
 		D7AEB7D72CFC5FAD00691663 /* TodoDetailInteractorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailInteractorProtocols.swift; sourceTree = "<group>"; };
 		D7AEB7DB2CFC7A9300691663 /* TodoDetailConfiguratorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailConfiguratorProtocols.swift; sourceTree = "<group>"; };
 		D7AEB7DD2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailModuleDelegate.swift; sourceTree = "<group>"; };
+		D7AEB7DF2CFCBCA600691663 /* ContextMenu.Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = ContextMenu.Localizable.xcstrings; sourceTree = "<group>"; };
+		D7AEB7E12CFCBCF600691663 /* ContextMenuAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuAssets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,8 +417,10 @@
 			children = (
 				D77391012CF6502500795469 /* Assets.xcassets */,
 				D7AEB7D32CFC5DC700691663 /* Notifications.Localizable.xcstrings */,
+				D7AEB7DF2CFCBCA600691663 /* ContextMenu.Localizable.xcstrings */,
 				D7277FF82CF8951100AE853A /* AssetsProtocols.swift */,
 				D7AEB7D52CFC5EA500691663 /* NotificationsAssets.swift */,
+				D7AEB7E12CFCBCF600691663 /* ContextMenuAssets.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -816,6 +822,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7AEB7E02CFCBCA600691663 /* ContextMenu.Localizable.xcstrings in Resources */,
 				D7AEB7D42CFC5DC700691663 /* Notifications.Localizable.xcstrings in Resources */,
 				D7AEB7C82CFB977100691663 /* TodoList.Localizable.xcstrings in Resources */,
 				D7AEB7B32CFB42EB00691663 /* ToDoModel.xcdatamodeld in Resources */,
@@ -907,6 +914,7 @@
 				D71C94C32CFAF1D800198934 /* TodoTableCellAssets.swift in Sources */,
 				D7AEB7BA2CFB43B000691663 /* TodoListViewProtocols.swift in Sources */,
 				D7AEB7D02CFC52B700691663 /* TodoDetailViewProtocols.swift in Sources */,
+				D7AEB7E22CFCBCF600691663 /* ContextMenuAssets.swift in Sources */,
 				D72780322CFA3D2700AE853A /* TodoDetailView.swift in Sources */,
 				D7AEB7BC2CFB43E000691663 /* TodoListPresenterProtocols.swift in Sources */,
 				D7AEB7D62CFC5EA500691663 /* NotificationsAssets.swift in Sources */,

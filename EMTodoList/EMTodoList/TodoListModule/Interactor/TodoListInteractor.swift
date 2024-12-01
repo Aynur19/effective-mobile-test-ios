@@ -62,10 +62,20 @@ extension TodoListInteractor: TodoListInteractorProtocol {
         }
     }
     
-    func completeTodo(todoId: Int64) {
-        guard let todo = todoList.complete(todoId: todoId) else { return }
+    func completeTodo(for id: Int64) {
+        guard let todo = todoList.complete(todoId: id) else { return }
         
-        presenter.didUpdated(todo: todo)
+        saveTodo(todo: todo.todo) { [weak self] in
+            self?.presenter.didUpdate(todo: todo)
+        }
+    }
+    
+    func deleteTodo(for id: Int64) {
+        guard let todo = todoList.todos.first(where: { $0.id == id }) else { return }
+        
+        deleteTodo(todoId: todo.id) { [weak self] in
+            self?.presenter.didDelete(todo: todo)
+        }
     }
 }
 
@@ -130,6 +140,26 @@ extension TodoListInteractor {
     
     private func saveTodos(todos: [Todo], completion: @escaping () -> Void) {
         coreDataStackManager.saveTodos(todos) { error in
+            if let error = error {
+                return logger.error(message: error.debugMessage)
+            }
+            
+            completion()
+        }
+    }
+    
+    private func saveTodo(todo: Todo, completion: @escaping () -> Void) {
+        coreDataStackManager.saveTodo(todo) { error in
+            if let error = error {
+                return logger.error(message: error.debugMessage)
+            }
+            
+            completion()
+        }
+    }
+    
+    private func deleteTodo(todoId: Int64, completion: @escaping () -> Void) {
+        coreDataStackManager.deleteTodo(by: todoId) { error in
             if let error = error {
                 return logger.error(message: error.debugMessage)
             }

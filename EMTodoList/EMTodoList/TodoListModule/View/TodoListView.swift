@@ -78,6 +78,7 @@ extension TodoListViewController: TodoListViewProtocol {
         let indexPath = IndexPath(row: idx, section: 0)
         
         DispatchQueue.main.async { [weak self] in
+            self?.todos.remove(at: idx)
             self?.tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -107,8 +108,61 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let todoId = todos[indexPath.row].id
-        presenter.didSelectTodo(todoId: todoId)
+        presenter.didTapOnCell(todoId: todoId)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        contextMenuConfigurationForRowAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        let selectedTodo = todos[indexPath.row]
+        
+        return UIContextMenuConfiguration(
+            identifier: indexPath as NSIndexPath,
+            previewProvider: nil
+        ) { [weak self] _ in
+            return self?.getContextMenu(todoId: selectedTodo.id)
+        }
+    }
+    
+    private func getContextMenu(todoId: Int64) -> UIMenu {
+        UIMenu(
+            children: [
+                getTodoEditAction(todoId: todoId),
+                getTodoShareAction(todoId: todoId),
+                getTodoDeleteAction(todoId: todoId)
+            ]
+        )
+    }
+    
+    private func getTodoEditAction(todoId: Int64) -> UIAction {
+        .init(
+            title: ContextMenuAssets.Strings.editAction.string,
+            image: ContextMenuAssets.Images.editAction.image
+        ) { [weak self] _ in
+            self?.presenter.didSelectToEdit(todoId: todoId)
+        }
+    }
+    
+    private func getTodoShareAction(todoId: Int64) -> UIAction {
+        .init(
+            title: ContextMenuAssets.Strings.shareAction.string,
+            image: ContextMenuAssets.Images.shareAction.image
+        ) { [weak self] _ in
+            self?.presenter.didSelectToShare(todoId: todoId)
+        }
+    }
+    
+    private func getTodoDeleteAction(todoId: Int64) -> UIAction {
+        .init(
+            title: ContextMenuAssets.Strings.deleteAction.string,
+            image: ContextMenuAssets.Images.deleteAction.image,
+            attributes: .destructive
+        ) { [weak self] _ in
+            self?.presenter.didSelectToDelete(todoId: todoId)
+        }
     }
 }
 

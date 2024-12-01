@@ -24,7 +24,11 @@ extension TodoListPresenter: TodoListPresenterViewProtocol {
     }
     
     func didTapIsCompleted(todoId: Int64) {
-        interactor.completeTodo(todoId: todoId)
+        interactor.completeTodo(for: todoId)
+    }
+    
+    func didTapOnCell(todoId: Int64) {
+        router.navigateToTodoDetail(for: todoId)
     }
     
     func didEnterSearch(searchText: String) {
@@ -35,11 +39,17 @@ extension TodoListPresenter: TodoListPresenterViewProtocol {
         }
     }
     
-    func didSelectTodo(todoId: Int64) {
+    func didSelectToEdit(todoId: Int64) {
         router.navigateToTodoDetail(for: todoId)
     }
     
+    func didSelectToShare(todoId: Int64) {
+        // TODO: something
+    }
     
+    func didSelectToDelete(todoId: Int64) {
+        interactor.deleteTodo(for: todoId)
+    }
 }
     
 
@@ -48,8 +58,12 @@ extension TodoListPresenter: TodoListPresenterInteractorProtocol {
         view?.show(todos: todos)
     }
     
-    func didUpdated(todo: TodoTableCellEntity) {
+    func didUpdate(todo: TodoTableCellEntity) {
         view?.update(todo: todo)
+    }
+    
+    func didDelete(todo: TodoTableCellEntity) {
+        view?.delete(todo: todo)
     }
 }
 

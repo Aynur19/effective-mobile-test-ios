@@ -156,7 +156,7 @@ extension TodoTableCellView: TodoTableCellViewProtocol {
         configureIsCompletedImageView(todo.isCompleted)
         configureNameLabel(todo.name, isCompleted: todo.isCompleted, searchText: searchText)
         configureDescriptionLabel(todo.description, isCompleted: todo.isCompleted, searchText: searchText)
-        configureCreatedOnLabel(todo.createdOn, searchText: searchText)
+        configureCreatedOnLabel(todo.createdOnStr, searchText: searchText)
     }
     
     private func configureIsCompletedImageView(_ isCompleted: Bool) {
@@ -261,7 +261,6 @@ extension TodoTableCellView: TodoTableCellViewProtocol {
                 [
                     NSAttributedString.Key.foregroundColor: UIColor.accent,
                     NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: .bold)
-                    
                 ],
                 range: range
             )

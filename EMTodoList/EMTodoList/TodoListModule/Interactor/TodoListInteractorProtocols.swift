@@ -12,5 +12,7 @@ protocol TodoListInteractorProtocol: AnyObject {
     
     func fetchTodos(searchText: String)
     
-    func completeTodo(todoId: Int64)
+    func completeTodo(for id: Int64)
+    
+    func deleteTodo(for id: Int64)
 }

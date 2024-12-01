@@ -5,6 +5,7 @@
 //  Created by Aynur Nasybullin on 30.11.2024.
 //
 
+import Foundation
 import EMCore
 
 struct TodoTableCellEntity {
@@ -13,7 +14,8 @@ struct TodoTableCellEntity {
     var name: String
     var description: String
     
-    var createdOn: String
+    var createdOn: Date
+    var createdOnStr: String
     var isCompleted: Bool
 }
  
@@ -24,8 +26,19 @@ extension TodoTableCellEntity {
             id: todo.id,
             name: todo.name,
             description: todo.description,
-            createdOn: todo.createdOn.todoShortDate,
+            createdOn: todo.createdOn,
+            createdOnStr: todo.createdOn.todoShortDate,
             isCompleted: todo.isCompleted
+        )
+    }
+    
+    var todo: Todo {
+        .init(
+            id: id,
+            name: name,
+            description: description,
+            createdOn: createdOn,
+            isCompleted: isCompleted
         )
     }
     

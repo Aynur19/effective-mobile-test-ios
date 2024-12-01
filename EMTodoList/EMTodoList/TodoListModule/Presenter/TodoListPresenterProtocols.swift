@@ -10,13 +10,21 @@ protocol TodoListPresenterViewProtocol: AnyObject {
     
     func didTapIsCompleted(todoId: Int64)
     
+    func didTapOnCell(todoId: Int64)
+    
     func didEnterSearch(searchText: String)
     
-    func didSelectTodo(todoId: Int64)
+    func didSelectToEdit(todoId: Int64)
+    
+    func didSelectToShare(todoId: Int64)
+    
+    func didSelectToDelete(todoId: Int64)
 }
 
 protocol TodoListPresenterInteractorProtocol: AnyObject {
     func didFetch(todos: [TodoTableCellEntity])
     
-    func didUpdated(todo: TodoTableCellEntity)
+    func didUpdate(todo: TodoTableCellEntity)
+    
+    func didDelete(todo: TodoTableCellEntity)
 }

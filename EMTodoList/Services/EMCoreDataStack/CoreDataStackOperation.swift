@@ -14,6 +14,7 @@ public enum CoreDataStackOperation {
     case saveTodos
     
     case fetchTodo
+    case createTodo
     case saveTodo
     case deleteTodo
     
@@ -31,8 +32,9 @@ extension CoreDataStackOperation: OperationProtocol {
             case .saveTodos:                    103
                 
             case .fetchTodo:                    201
-            case .saveTodo:                     202
-            case .deleteTodo:                   203
+            case .createTodo:                   202
+            case .saveTodo:                     203
+            case .deleteTodo:                   204
                 
             case .dropDatabase(.todo):          1001
             case .removeDatabaseFile(.todo):    1002
@@ -57,6 +59,9 @@ extension CoreDataStackOperation: OperationProtocol {
                 
             case .saveTodo:
                 "Запрос на сохранение конкретной задачи (Core Data)"
+                
+            case .createTodo:
+                "Запрос на создание новой задачи (Core Data)"
                 
             case .deleteTodo:
                 "Запрос на удаление конкретной задачи (Core Data)"

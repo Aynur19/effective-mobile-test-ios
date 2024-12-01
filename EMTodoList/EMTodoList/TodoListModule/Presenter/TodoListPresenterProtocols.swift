@@ -19,6 +19,8 @@ protocol TodoListPresenterViewProtocol: AnyObject {
     func didSelectToShare(todoId: Int64)
     
     func didSelectToDelete(todoId: Int64)
+    
+    func didTapCreateTodo()
 }
 
 protocol TodoListPresenterInteractorProtocol: AnyObject {

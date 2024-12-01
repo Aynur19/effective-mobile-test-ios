@@ -15,9 +15,18 @@ fileprivate let logger = Logger(subsystem: "EMToDoList.TodoDetailModule", catego
 class TodoDetailInteractor: TodoDetailInteractorProtocol {
     private var todo: TodoDetailEntity!
     private let presenter: TodoDetailPresenterInteractorProtocol
+    private let isNewTodo: Bool
     
-    required init(presenter: TodoDetailPresenterInteractorProtocol) {
+    required init(
+        presenter: TodoDetailPresenterInteractorProtocol,
+        isNewTodo: Bool
+    ) {
         self.presenter = presenter
+        self.isNewTodo = isNewTodo
+        
+        if isNewTodo {
+            todo = .getNewEmpty()
+        }
     }
     
     private var coreDataStack: EMCoreDataStackManager {
@@ -25,20 +34,26 @@ class TodoDetailInteractor: TodoDetailInteractorProtocol {
     }
 
     func fetchTodo(by id: Int64) {
-        guard id > 0 else {
-            todo = .getNewEmpty()
+        if isNewTodo {
             return presenter.didFetch(todo: todo)
         }
         
         fetchTodo(by: id) { [weak self] todo in
-            self?.presenter.didFetch(todo: todo)
+            self?.todo = todo
+            self?.presenter.didFetch(todo: self?.todo)
         }
     }
     
     func saveTodo(_ todo: TodoDetailEntity) {
-        if todo != self.todo {
-            self.todo = todo
-            
+        guard todo != self.todo else { return }
+        
+        self.todo = todo
+        
+        if isNewTodo {
+            createTodo { [weak self] in
+                self?.presenter.didCreate(todo: todo)
+            }
+        } else {
             saveTodo { [weak self] in
                 self?.presenter.didSave(todo: todo)
             }
@@ -58,6 +73,15 @@ extension TodoDetailInteractor {
                     logger.error(message: error.debugMessage)
                     completion(nil)
             }
+        }
+    }
+    
+    func createTodo(completion: @escaping () -> Void) {
+        coreDataStack.createTodo(todo.todo) { error in
+            if let error {
+                return logger.error(message: error.debugMessage)
+            }
+            completion()
         }
     }
     

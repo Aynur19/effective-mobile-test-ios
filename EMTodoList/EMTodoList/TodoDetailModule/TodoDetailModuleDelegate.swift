@@ -8,6 +8,8 @@
 import EMCore
 
 protocol TodoDetailModuleDelegate: AnyObject {
+    func didCreate()
+    
     func didDeleteTodo(_ todo: Todo)
     
     func didSaveTodo(_ todo: Todo)

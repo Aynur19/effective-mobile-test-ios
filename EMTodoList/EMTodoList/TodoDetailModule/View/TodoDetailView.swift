@@ -24,12 +24,27 @@ class TodoDetailViewController: UIViewController {
         setupUI()
         setupConstraints()
         setipSubscriptions()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        title = TodoDetailAssets.Strings.todo.string
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.titleView?.tintColor = TodoDetailAssets.Colors.todoNameFg.color
+        
         presenter.viewDidLoad(for: todo.id)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         updateTodo()
-        presenter.viewWillDisappear(todo: todo)
+        if todoIsChanged {
+            presenter.viewWillDisappear(todo: todo)
+        }
+        
         super.viewWillDisappear(animated)
     }
     
@@ -56,6 +71,8 @@ class TodoDetailViewController: UIViewController {
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        textField.addTarget(self, action: #selector(handleReturnKey), for: .editingDidEndOnExit)
         return textField
     }()
     
@@ -88,23 +105,43 @@ class TodoDetailViewController: UIViewController {
         textView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textView.textColor = TodoDetailAssets.Colors.todoDescriptionFg.color
         textView.textAlignment = .natural
-        textView.returnKeyType = .done
+        textView.returnKeyType = .next
         
         textView.isScrollEnabled = true
-        textView.alwaysBounceVertical = true
         textView.showsVerticalScrollIndicator = true    
         textView.showsHorizontalScrollIndicator = false
+        
+        textView.inputAccessoryView = createKeyboardToolbar()
         
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
+    private func createKeyboardToolbar() -> UIToolbar {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        // Кнопка "Готово"
+        let doneButton = UIBarButtonItem(
+            title: "Готово",
+            style: .done,
+            target: self,
+            action: #selector(dismissKeyboard)
+        )
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.items = [flexSpace, doneButton]
+        
+        return toolbar
+    }
+    
     private func todoDescriptionAttributedText(_ text: String) -> NSMutableAttributedString {
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.15
         
         return NSMutableAttributedString(
-            string: text,
+            string: !text.isEmpty ? text : TodoDetailAssets.Strings.todoDescription.string,
             attributes: [
                 NSAttributedString.Key.kern: -0.43,
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,
@@ -155,16 +192,22 @@ extension TodoDetailViewController: TodoDetailViewPresenterProtocol {
         todo.name = todoNameTextField.text ?? ""
         todo.description = todoDescriptionTextView.text
     }
+    
+    private var todoIsChanged: Bool {
+        todoNameIsChanged || todoDescriptionIsChanged
+    }
+    
+    private var todoNameIsChanged: Bool {
+        !(todo.name.isEmpty || todo.name == TodoDetailAssets.Strings.todoName.string)
+    }
+    
+    private var todoDescriptionIsChanged: Bool {
+        !(todo.description.isEmpty || todo.description == TodoDetailAssets.Strings.todoDescription.string)
+    }
 }
 
 extension TodoDetailViewController {
     private func setupUI() {
-//        view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.prefersLargeTitles = false
-        
-        title = TodoDetailAssets.Strings.todo.string
-        navigationItem.titleView?.tintColor = TodoDetailAssets.Colors.todoNameFg.color
-        
         view.addSubview(stackView)
         stackView.addArrangedSubview(todoNameTextField)
         stackView.addArrangedSubview(todoCreatedOnLabel)
@@ -239,7 +282,7 @@ extension TodoDetailViewController {
                 guard let self else { return }
                 
                 view.layoutIfNeeded()
-                stackView.setCustomSpacing(30, after: todoDescriptionTextView)
+//                stackView.setCustomSpacing(30, after: todoDescriptionTextView)
                 view.frame.size.height = view.frame.height - keyboardFrame.height
             }
             
@@ -249,14 +292,18 @@ extension TodoDetailViewController {
         
     @objc private func keyboardWillHide(notification: NSNotification) {
         if isKeyboardVisible {
+            isKeyboardVisible = false
             UIView.animate(withDuration: 0.7) { [weak self] in
                 guard let self else { return }
                 
                 view.layoutIfNeeded()
-                stackView.setCustomSpacing(10, after: todoDescriptionTextView)
+//                stackView.setCustomSpacing(10, after: todoDescriptionTextView)
                 view.frame.size.height = UIScreen.main.bounds.height
             }
-            isKeyboardVisible = false
         }
+    }
+    
+    @objc private func handleReturnKey() {
+        view.endEditing(true)
     }
 }

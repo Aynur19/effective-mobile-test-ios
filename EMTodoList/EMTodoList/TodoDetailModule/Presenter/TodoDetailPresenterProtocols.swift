@@ -21,6 +21,8 @@ protocol TodoDetailPresenterViewProtocol: AnyObject {
 protocol TodoDetailPresenterInteractorProtocol: AnyObject {
     func didFetch(todo: TodoDetailEntity?)
     
+    func didCreate(todo: TodoDetailEntity)
+    
     func didDelete(todo: TodoDetailEntity)
     
     func didSave(todo: TodoDetailEntity)

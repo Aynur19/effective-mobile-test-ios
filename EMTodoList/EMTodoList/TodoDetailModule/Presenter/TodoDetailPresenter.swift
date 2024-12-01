@@ -36,6 +36,7 @@ extension TodoDetailPresenter: TodoDetailPresenterViewProtocol {
     }
     
     func viewWillDisappear(todo: TodoDetailEntity) {
+        router.closeCurrentViewController()
         interactor.saveTodo(todo)
     }
 }
@@ -43,6 +44,10 @@ extension TodoDetailPresenter: TodoDetailPresenterViewProtocol {
 extension TodoDetailPresenter: TodoDetailPresenterInteractorProtocol {
     func didFetch(todo: TodoDetailEntity?) {
         view?.show(todo: todo)
+    }
+    
+    func didCreate(todo: TodoDetailEntity) {
+        delegate?.didCreate()
     }
     
     func didDelete(todo: TodoDetailEntity) {

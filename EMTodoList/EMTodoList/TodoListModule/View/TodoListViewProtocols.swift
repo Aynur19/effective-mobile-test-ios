@@ -16,6 +16,8 @@ protocol TodoTableCellViewProtocol {
 
 
 protocol TodoListViewProtocol: AnyObject {
+    func reload()
+    
     func show(todos: [TodoTableCellEntity])
     
     func update(todo: TodoTableCellEntity)

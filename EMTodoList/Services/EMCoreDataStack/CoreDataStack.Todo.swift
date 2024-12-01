@@ -34,6 +34,11 @@ public protocol CoreDataStackTodoProtocol {
         completion: @escaping (Result<Todo, CoreDataStackOperationError>) -> Void
     )
     
+    func createTodo(
+        _ todo: Todo,
+        completion: @escaping (CoreDataStackOperationError?) -> Void
+    )
+    
     func deleteTodo(
         by id: Int64,
         completion: @escaping (CoreDataStackOperationError?) -> Void
@@ -182,6 +187,25 @@ extension CoreDataStack: CoreDataStackTodoProtocol {
         }
     }
     
+    
+    public func createTodo(_ todo: Todo, completion: @escaping (CoreDataStackOperationError?) -> Void) {
+        let operation = CoreDataStackOperation.createTodo
+        let context = todoPersistentContainer.newBackgroundContext()
+        logger.info(message: operation.logExecutionMessage())
+        
+        do {
+            try createTodoRequest(context, todo: todo)
+            
+            logger.info(message: operation.logSuccessMessage())
+            return completion(nil)
+        } catch let error as CoreDataStackOperationError {
+            return completion(getLoggedError(for: operation, error: error))
+        } catch let nsError as NSError {
+            return completion(getLoggedError(for: operation, error: .deleteError(nsError: nsError)))
+        }
+    }
+    
+        
     public func deleteTodo(by id: Int64, completion: @escaping (CoreDataStackOperationError?) -> Void) {
         let operation = CoreDataStackOperation.deleteTodo
         let context = todoPersistentContainer.newBackgroundContext()
@@ -280,10 +304,6 @@ extension CoreDataStack {
             } else {
                 _ = TodoCoreDataModel.create(context: context, todo: todo)
             }
-
-            if context.hasChanges {
-                try context.save()
-            }
         }
         
         try saveBackgroundContext(context)
@@ -299,6 +319,11 @@ extension CoreDataStack {
         }
     }
     
+    private func createTodoRequest(_ context: NSManagedObjectContext, todo: Todo) throws {
+        _ = TodoCoreDataModel.create(context: context, todo: todo)
+        try saveBackgroundContext(context)
+    }
+    
     private func saveTodoRequest(_ context: NSManagedObjectContext, todo: Todo) throws {
         guard let fetchedTodo = try fetchTodoRequest(context, todoId: todo.id) else {
             throw CoreDataStackOperationError.notFoundByIdError(id: String(todo.id))
@@ -311,8 +336,6 @@ extension CoreDataStack {
         
         try saveBackgroundContext(context)
     }
-    
-    
     
     private func deleteTodoRequest(_ context: NSManagedObjectContext, todoId: Int64) throws {
         guard let fetchedTodo = try fetchTodoRequest(context, todoId: todoId) else {

@@ -50,6 +50,10 @@ extension TodoListPresenter: TodoListPresenterViewProtocol {
     func didSelectToDelete(todoId: Int64) {
         interactor.deleteTodo(for: todoId)
     }
+    
+    func didTapCreateTodo() {
+        router.navigateToTodoDetail(for: nil)
+    }
 }
     
 
@@ -69,11 +73,15 @@ extension TodoListPresenter: TodoListPresenterInteractorProtocol {
 
 
 extension TodoListPresenter: TodoDetailModuleDelegate {
+    func didCreate() {
+        view?.reload()
+    }
+    
     func didDeleteTodo(_ todo: Todo) {
         view?.delete(todo: .create(todo: todo))
     }
     
     func didSaveTodo(_ todo: Todo) {
-        view?.update(todo: .create(todo: todo))
+        interactor.fetchTodo(for: todo.id)
     }
 }

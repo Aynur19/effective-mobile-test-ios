@@ -62,6 +62,16 @@ extension TodoListInteractor: TodoListInteractorProtocol {
         }
     }
     
+    func fetchTodo(for id: Int64) {
+        guard let idx = todoList.todos.firstIndex(where: { $0.id == id }) else { return }
+        
+        fetchTodo(for: id) { [weak self] todo in
+            let fetchedTodo = TodoTableCellEntity.create(todo: todo)
+            self?.todoList.todos[idx] = fetchedTodo
+            self?.presenter.didUpdate(todo: fetchedTodo)
+        }
+    }
+    
     func completeTodo(for id: Int64) {
         guard let todo = todoList.complete(todoId: id) else { return }
         
@@ -114,6 +124,20 @@ extension TodoListInteractor {
             switch result {
                 case .success(let todos):
                     completion(todos)
+                    
+                case .failure(let error):
+                    logger.error(message: error.debugMessage)
+            }
+        }
+    }
+    
+    private func fetchTodo(for id: Int64, completion: @escaping (Todo) -> Void) {
+        logger.error(message: "Запрос на получение конкретной задачи из CoreData...")
+        
+        coreDataStackManager.fetchTodo(by: id) { result in
+            switch result {
+                case .success(let todo):
+                    completion(todo)
                     
                 case .failure(let error):
                     logger.error(message: error.debugMessage)

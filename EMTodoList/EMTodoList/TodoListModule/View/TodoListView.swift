@@ -13,25 +13,78 @@ class TodoListViewController: UIViewController {
     var presenter: (TodoListPresenterViewProtocol & TodoDetailModuleDelegate)!
     let configurator: TodoListConfiguratorProtocol = TodoListConfigurator()
     
-    private let tableView = UITableView()
+    
     private let searchController = UISearchController(searchResultsController: nil)
     private var todos = [TodoTableCellEntity]()
     private let tableCellId = "TodoTableCellView"
     private var searchText = ""
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    private lazy var toolBar: UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        
+        let spacer = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil
+        )
+        
+        let createTodoButton = UIBarButtonItem(
+            image: TodoListAssets.Images.createToolbarBtn.image,
+            style: .plain,
+            target: self,
+            action: #selector(didTapCreateTodo)
+        )
+        
+        let todoCountLabel = UIBarButtonItem(customView: todoCountLabel)
+//        todoCountLabel.target = toolbar
+        
+//        toolbar.setItems([spacer, todoCountLabel, spacer, createTodoButton], animated: false)
+        toolbar.setItems([spacer, todoCountLabel, spacer, createTodoButton], animated: false)
+        return toolbar
+    }()
+    
+    private lazy var todoCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.textAlignment = .center
+        
+//        label.translatesAutoresizingMaskIntoConstraints = false
+        label.sizeToFit()
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configurator.configure(with: self)
         setupUI()
         setupSearchController()
-        presenter.viewDidLoad()
+        setupTableViewConstraints()
+        setupBottomBarConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        title = TodoListAssets.Strings.viewTitle.string
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        
+        if todos.isEmpty {
+            presenter.viewDidLoad()
+        }
     }
     
     private func setupUI() {
-        title = TodoListAssets.Strings.viewTitle.string
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
         view.addSubview(tableView)
+        view.addSubview(toolBar)
+        
         tableView.frame = view.bounds
         tableView.delegate = self
         tableView.dataSource = self
@@ -51,15 +104,56 @@ class TodoListViewController: UIViewController {
         
         definesPresentationContext = true
     }
+
+    private func setupTableViewConstraints() {
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: toolBar.topAnchor),
+        ])
+    }
+    
+    private func setupBottomBarConstraints() {
+        NSLayoutConstraint.activate([
+            toolBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            toolBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            toolBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            toolBar.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+
+    @objc private func didTapCreateTodo() {
+        presenter.didTapCreateTodo()
+    }
+    
+    private func updateTodosCount() {
+        if let label = toolBar.items?[1].customView as? UILabel {
+            label.text = String(
+                format: TodoListAssets.Strings.tasksCount.string,
+                todos.count
+            )
+            label.sizeToFit()
+        }
+    }
 }
 
 extension TodoListViewController: TodoListViewProtocol {
+    func reload() {
+        guard searchText.isEmpty else {
+            return presenter.didEnterSearch(searchText: searchText)
+        }
+        
+        presenter.viewDidLoad()
+    }
+    
     func show(todos: [TodoTableCellEntity]) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             
             self.todos = todos
             tableView.reloadData()
+            updateTodosCount()
         }
     }
     
@@ -70,6 +164,7 @@ extension TodoListViewController: TodoListViewProtocol {
         let indexPath = IndexPath(row: idx, section: 0)
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+            self?.updateTodosCount()
         }
     }
     
@@ -80,6 +175,7 @@ extension TodoListViewController: TodoListViewProtocol {
         DispatchQueue.main.async { [weak self] in
             self?.todos.remove(at: idx)
             self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+            self?.updateTodosCount()
         }
     }
 }

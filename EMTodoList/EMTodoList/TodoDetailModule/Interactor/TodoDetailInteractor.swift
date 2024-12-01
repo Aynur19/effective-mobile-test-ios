@@ -12,7 +12,7 @@ import EMCoreDataStack
 
 fileprivate let logger = Logger(subsystem: "EMToDoList.TodoDetailModule", category: "Todo Detail Module")
 
-class TodoDetailInteractor: TodoDetailInteractorProtocol {
+class TodoDetailInteractor {
     private var todo: TodoDetailEntity!
     private let presenter: TodoDetailPresenterInteractorProtocol
     private let isNewTodo: Bool
@@ -32,7 +32,10 @@ class TodoDetailInteractor: TodoDetailInteractorProtocol {
     private var coreDataStack: EMCoreDataStackManager {
         ManagerProvider.shared.coreDataStackManager
     }
+}
 
+
+extension TodoDetailInteractor: TodoDetailInteractorProtocol {
     func fetchTodo(by id: Int64) {
         if isNewTodo {
             return presenter.didFetch(todo: todo)
@@ -46,7 +49,6 @@ class TodoDetailInteractor: TodoDetailInteractorProtocol {
     
     func saveTodo(_ todo: TodoDetailEntity) {
         guard todo != self.todo else { return }
-        
         self.todo = todo
         
         if isNewTodo {

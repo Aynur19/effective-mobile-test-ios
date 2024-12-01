@@ -16,13 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        let window = UIWindow(windowScene: windowScene)
                 
         let initialViewController = TodoListViewController()
-//        TodoListConfigurator().configure(with: initialViewController)
         let navigationController = UINavigationController(rootViewController: initialViewController)
         
+        let window = UIWindow(windowScene: windowScene)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
@@ -30,12 +28,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         setupAppearance()
     }
     
-    func setupAppearance() {
+    private func setupAppearance() {
         window?.overrideUserInterfaceStyle = .dark
         
-        // Дополнительные настройки темной темы (например, кастомизация NavigationBar)
         UINavigationBar.appearance().barStyle = .black
-//        UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]

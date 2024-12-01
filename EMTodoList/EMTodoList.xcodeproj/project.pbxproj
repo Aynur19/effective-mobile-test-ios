@@ -83,6 +83,8 @@
 		D7AEB7DE2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7DD2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift */; };
 		D7AEB7E02CFCBCA600691663 /* ContextMenu.Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D7AEB7DF2CFCBCA600691663 /* ContextMenu.Localizable.xcstrings */; };
 		D7AEB7E22CFCBCF600691663 /* ContextMenuAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7E12CFCBCF600691663 /* ContextMenuAssets.swift */; };
+		D7AEB7E42CFD105900691663 /* SharedButtons.Localizablle.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D7AEB7E32CFD105800691663 /* SharedButtons.Localizablle.xcstrings */; };
+		D7AEB7E62CFD108900691663 /* SharedButtonsAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7E52CFD108900691663 /* SharedButtonsAssets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +219,8 @@
 		D7AEB7DD2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailModuleDelegate.swift; sourceTree = "<group>"; };
 		D7AEB7DF2CFCBCA600691663 /* ContextMenu.Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = ContextMenu.Localizable.xcstrings; sourceTree = "<group>"; };
 		D7AEB7E12CFCBCF600691663 /* ContextMenuAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuAssets.swift; sourceTree = "<group>"; };
+		D7AEB7E32CFD105800691663 /* SharedButtons.Localizablle.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = SharedButtons.Localizablle.xcstrings; sourceTree = "<group>"; };
+		D7AEB7E52CFD108900691663 /* SharedButtonsAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedButtonsAssets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,8 +410,8 @@
 		D7277FF32CF8941D00AE853A /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				D7277FF52CF8949D00AE853A /* TodoDetailAssets.swift */,
 				D7277FFA2CF896AC00AE853A /* TodoDetail.Localizable.xcstrings */,
+				D7277FF52CF8949D00AE853A /* TodoDetailAssets.swift */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -417,10 +421,12 @@
 			children = (
 				D77391012CF6502500795469 /* Assets.xcassets */,
 				D7AEB7D32CFC5DC700691663 /* Notifications.Localizable.xcstrings */,
+				D7AEB7E32CFD105800691663 /* SharedButtons.Localizablle.xcstrings */,
 				D7AEB7DF2CFCBCA600691663 /* ContextMenu.Localizable.xcstrings */,
 				D7277FF82CF8951100AE853A /* AssetsProtocols.swift */,
 				D7AEB7D52CFC5EA500691663 /* NotificationsAssets.swift */,
 				D7AEB7E12CFCBCF600691663 /* ContextMenuAssets.swift */,
+				D7AEB7E52CFD108900691663 /* SharedButtonsAssets.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -823,6 +829,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7AEB7E02CFCBCA600691663 /* ContextMenu.Localizable.xcstrings in Resources */,
+				D7AEB7E42CFD105900691663 /* SharedButtons.Localizablle.xcstrings in Resources */,
 				D7AEB7D42CFC5DC700691663 /* Notifications.Localizable.xcstrings in Resources */,
 				D7AEB7C82CFB977100691663 /* TodoList.Localizable.xcstrings in Resources */,
 				D7AEB7B32CFB42EB00691663 /* ToDoModel.xcdatamodeld in Resources */,
@@ -937,6 +944,7 @@
 				D7AEB7B22CFB38E000691663 /* TodoTableCellEntity.swift in Sources */,
 				D7277FEA2CF7BFD300AE853A /* TodoDetailInteractor.swift in Sources */,
 				D7277FEC2CF7BFE900AE853A /* TodoDetailPresenter.swift in Sources */,
+				D7AEB7E62CFD108900691663 /* SharedButtonsAssets.swift in Sources */,
 				D727802E2CFA23BC00AE853A /* TodoListEntity.swift in Sources */,
 				D727802C2CFA23B400AE853A /* TodoListConfigurator.swift in Sources */,
 			);

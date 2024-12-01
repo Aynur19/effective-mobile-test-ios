@@ -61,7 +61,6 @@ class TodoDetailViewController: UIViewController {
         return stackView
     }()
     
-    // MARK: Task Name
     private lazy var todoNameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = TodoDetailAssets.Strings.todoName.string
@@ -72,11 +71,10 @@ class TodoDetailViewController: UIViewController {
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        textField.addTarget(self, action: #selector(handleReturnKey), for: .editingDidEndOnExit)
+        textField.addTarget(self, action: #selector(dismissKeyboard), for: .editingDidEndOnExit)
         return textField
     }()
     
-    // MARK: Task Created On
     private lazy var todoCreatedOnLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -87,19 +85,6 @@ class TodoDetailViewController: UIViewController {
         return label
     }()
     
-    private func todoCreatedOnAttributedText(_ text: String) -> NSMutableAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.12
-
-        return NSMutableAttributedString(
-            string: text,
-            attributes: [
-                NSAttributedString.Key.paragraphStyle: paragraphStyle
-            ]
-        )
-    }
-    
-    // MARK: Task Description
     private lazy var todoDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -111,19 +96,18 @@ class TodoDetailViewController: UIViewController {
         textView.showsVerticalScrollIndicator = true    
         textView.showsHorizontalScrollIndicator = false
         
-        textView.inputAccessoryView = createKeyboardToolbar()
+        textView.inputAccessoryView = keyboardDoneToolbar
         
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
-    private func createKeyboardToolbar() -> UIToolbar {
+    private lazy var keyboardDoneToolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
-        // Кнопка "Готово"
         let doneButton = UIBarButtonItem(
-            title: "Готово",
+            title: SharedButtonsAssets.Strings.done.string,
             style: .done,
             target: self,
             action: #selector(dismissKeyboard)
@@ -133,25 +117,10 @@ class TodoDetailViewController: UIViewController {
         toolbar.items = [flexSpace, doneButton]
         
         return toolbar
-    }
-    
-    private func todoDescriptionAttributedText(_ text: String) -> NSMutableAttributedString {
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.15
-        
-        return NSMutableAttributedString(
-            string: !text.isEmpty ? text : TodoDetailAssets.Strings.todoDescription.string,
-            attributes: [
-                NSAttributedString.Key.kern: -0.43,
-                NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular),
-                NSAttributedString.Key.foregroundColor: TodoDetailAssets.Colors.todoDescriptionFg.color,
-            ]
-        )
-    }
+    }()
 }
 
+// MARK: Configurator
 extension TodoDetailViewController: TodoDetailViewConfiguratorProtocol {
     func configure(todoId: Int64?, presenter: TodoDetailPresenterViewProtocol) {
         self.presenter = presenter
@@ -165,6 +134,7 @@ extension TodoDetailViewController: TodoDetailViewConfiguratorProtocol {
 }
 
 
+// MARK: Presenter
 extension TodoDetailViewController: TodoDetailViewPresenterProtocol {
     func show(todo: TodoDetailEntity?) {
         guard let todo else {
@@ -204,8 +174,37 @@ extension TodoDetailViewController: TodoDetailViewPresenterProtocol {
     private var todoDescriptionIsChanged: Bool {
         !(todo.description.isEmpty || todo.description == TodoDetailAssets.Strings.todoDescription.string)
     }
+    
+    private func todoCreatedOnAttributedText(_ text: String) -> NSMutableAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.12
+
+        return NSMutableAttributedString(
+            string: text,
+            attributes: [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle
+            ]
+        )
+    }
+    
+    private func todoDescriptionAttributedText(_ text: String) -> NSMutableAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.15
+        
+        return NSMutableAttributedString(
+            string: !text.isEmpty ? text : TodoDetailAssets.Strings.todoDescription.string,
+            attributes: [
+                NSAttributedString.Key.kern: -0.43,
+                NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular),
+                NSAttributedString.Key.foregroundColor: TodoDetailAssets.Colors.todoDescriptionFg.color,
+            ]
+        )
+    }
 }
 
+
+// MARK: UI - Layout
 extension TodoDetailViewController {
     private func setupUI() {
         view.addSubview(stackView)
@@ -268,8 +267,11 @@ extension TodoDetailViewController {
             todoDescriptionTextView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
         ])
     }
-    
-    // MARK: - Actions
+}
+
+
+// MARK: - Actions
+extension TodoDetailViewController {
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -282,7 +284,6 @@ extension TodoDetailViewController {
                 guard let self else { return }
                 
                 view.layoutIfNeeded()
-//                stackView.setCustomSpacing(30, after: todoDescriptionTextView)
                 view.frame.size.height = view.frame.height - keyboardFrame.height
             }
             
@@ -297,13 +298,8 @@ extension TodoDetailViewController {
                 guard let self else { return }
                 
                 view.layoutIfNeeded()
-//                stackView.setCustomSpacing(10, after: todoDescriptionTextView)
                 view.frame.size.height = UIScreen.main.bounds.height
             }
         }
-    }
-    
-    @objc private func handleReturnKey() {
-        view.endEditing(true)
     }
 }

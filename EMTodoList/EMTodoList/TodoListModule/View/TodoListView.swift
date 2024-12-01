@@ -13,7 +13,6 @@ class TodoListViewController: UIViewController {
     var presenter: (TodoListPresenterViewProtocol & TodoDetailModuleDelegate)!
     let configurator: TodoListConfiguratorProtocol = TodoListConfigurator()
     
-    
     private let searchController = UISearchController(searchResultsController: nil)
     private var todos = [TodoTableCellEntity]()
     private let tableCellId = "TodoTableCellView"
@@ -43,9 +42,7 @@ class TodoListViewController: UIViewController {
         )
         
         let todoCountLabel = UIBarButtonItem(customView: todoCountLabel)
-//        todoCountLabel.target = toolbar
         
-//        toolbar.setItems([spacer, todoCountLabel, spacer, createTodoButton], animated: false)
         toolbar.setItems([spacer, todoCountLabel, spacer, createTodoButton], animated: false)
         return toolbar
     }()
@@ -54,8 +51,6 @@ class TodoListViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         label.textAlignment = .center
-        
-//        label.translatesAutoresizingMaskIntoConstraints = false
         label.sizeToFit()
         return label
     }()

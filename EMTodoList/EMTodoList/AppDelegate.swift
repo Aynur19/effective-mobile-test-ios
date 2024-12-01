@@ -26,14 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        // Override point for customization after application launch.
         ManagerProvider.initialize(
             todoPersistentContainer: todoPersistentContainer
         )
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
 
     func application(
         _ application: UIApplication,

@@ -50,8 +50,6 @@ extension CoreDataStack: CoreDataStackProtocol {
         completion: @escaping (CoreDataStackOperationError?) -> Void
     ) {
         logger.info("Инициация процесса удаления базы данных чатов перед выходом")
-        
-        var operationError: CoreDataStackOperationError?
         let persistentContainer: NSPersistentContainer
         
         switch database {

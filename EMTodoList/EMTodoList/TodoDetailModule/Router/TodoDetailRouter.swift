@@ -18,7 +18,5 @@ class TodoDetailRouter: TodoDetailRouterProtocol {
         self.viewController = viewController
     }
  
-    func closeCurrentViewController() {
-        
-    }
+    func closeCurrentViewController() { }
 }

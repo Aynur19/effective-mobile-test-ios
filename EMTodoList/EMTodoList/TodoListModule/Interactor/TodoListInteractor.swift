@@ -30,7 +30,6 @@ class TodoListInteractor {
     
     var coreDataStackManager: EMCoreDataStackManager { ManagerProvider.shared.coreDataStackManager }
     
-    
     required init(presenter: TodoListPresenterInteractorProtocol) {
         self.presenter = presenter
     }

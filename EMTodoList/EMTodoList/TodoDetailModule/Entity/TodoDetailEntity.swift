@@ -32,6 +32,16 @@ extension TodoDetailEntity {
         )
     }
     
+    static func getEmpty(for id: Int64) -> Self {
+        return .init(
+            id: id,
+            name: "",
+            description: "",
+            createdOn: .now,
+            isCompleted: false
+        )
+    }
+    
     static func create(todo: Todo) -> Self {
         .init(
             id: todo.id,
@@ -41,4 +51,16 @@ extension TodoDetailEntity {
             isCompleted: todo.isCompleted
         )
     }
+    
+    var todo: Todo {
+        .init(
+            id: id, 
+            name: name,
+            description: description,
+            createdOn: createdOn,
+            isCompleted: isCompleted
+        )
+    }
 }
+
+extension TodoDetailEntity: Equatable { }

@@ -6,9 +6,9 @@
 //
 
 class TodoDetailConfigurator: TodoDetailConfiguratorProtocol {
-    static func createModule(for todoId: Int64? = nil) -> TodoDetailViewController {
+    static func createModule(for todoId: Int64? = nil, delegate: TodoDetailModuleDelegate) -> TodoDetailViewController {
         let viewController = TodoDetailViewController()
-        let presenter = TodoDetailPresenter(view: viewController)
+        let presenter = TodoDetailPresenter(view: viewController, delegate: delegate)
         let interactor = TodoDetailInteractor(presenter: presenter)
         let router = TodoDetailRouter(viewController: viewController)
         

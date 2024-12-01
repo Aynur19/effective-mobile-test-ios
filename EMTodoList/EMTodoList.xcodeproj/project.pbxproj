@@ -80,6 +80,7 @@
 		D7AEB7D62CFC5EA500691663 /* NotificationsAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7D52CFC5EA500691663 /* NotificationsAssets.swift */; };
 		D7AEB7D82CFC5FAD00691663 /* TodoDetailInteractorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7D72CFC5FAD00691663 /* TodoDetailInteractorProtocols.swift */; };
 		D7AEB7DC2CFC7A9300691663 /* TodoDetailConfiguratorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7DB2CFC7A9300691663 /* TodoDetailConfiguratorProtocols.swift */; };
+		D7AEB7DE2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7DD2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +212,7 @@
 		D7AEB7D52CFC5EA500691663 /* NotificationsAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAssets.swift; sourceTree = "<group>"; };
 		D7AEB7D72CFC5FAD00691663 /* TodoDetailInteractorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailInteractorProtocols.swift; sourceTree = "<group>"; };
 		D7AEB7DB2CFC7A9300691663 /* TodoDetailConfiguratorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailConfiguratorProtocols.swift; sourceTree = "<group>"; };
+		D7AEB7DD2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailModuleDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +387,7 @@
 		D7277FE62CF7BF2400AE853A /* TodoDetailModule */ = {
 			isa = PBXGroup;
 			children = (
+				D7AEB7DD2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift */,
 				D7277FF32CF8941D00AE853A /* Assets */,
 				D7AEB7D92CFC7A1900691663 /* Configurator */,
 				D7AEB7CB2CFC51E000691663 /* View */,
@@ -899,6 +902,7 @@
 				D72780262CFA238700AE853A /* TodoListPresenter.swift in Sources */,
 				D7AEB7C02CFB443F00691663 /* TodoListRouterProtocols.swift in Sources */,
 				D7AEB7D22CFC530D00691663 /* TodoDetailPresenterProtocols.swift in Sources */,
+				D7AEB7DE2CFC9DFF00691663 /* TodoDetailModuleDelegate.swift in Sources */,
 				D7AEB7C22CFB445C00691663 /* TodoListConfiguratorProtocols.swift in Sources */,
 				D71C94C32CFAF1D800198934 /* TodoTableCellAssets.swift in Sources */,
 				D7AEB7BA2CFB43B000691663 /* TodoListViewProtocols.swift in Sources */,

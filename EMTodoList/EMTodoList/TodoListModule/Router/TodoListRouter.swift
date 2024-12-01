@@ -18,7 +18,7 @@ class TodoListRouter {
 
 extension TodoListRouter: TodoListRouterProtocol {
     func navigateToTodoDetail(for todoId: Int64?) {
-        let todoDetailViewController = TodoDetailConfigurator.createModule(for: todoId)
+        let todoDetailViewController = TodoDetailConfigurator.createModule(for: todoId, delegate: viewController.presenter)
         viewController.navigationController?.pushViewController(
             todoDetailViewController, animated: true
         )

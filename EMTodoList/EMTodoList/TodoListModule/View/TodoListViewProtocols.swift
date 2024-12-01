@@ -19,4 +19,6 @@ protocol TodoListViewProtocol: AnyObject {
     func show(todos: [TodoTableCellEntity])
     
     func update(todo: TodoTableCellEntity)
+    
+    func delete(todo: TodoTableCellEntity)
 }

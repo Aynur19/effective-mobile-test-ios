@@ -36,7 +36,13 @@ class TodoDetailInteractor: TodoDetailInteractorProtocol {
     }
     
     func saveTodo(_ todo: TodoDetailEntity) {
-        
+        if todo != self.todo {
+            self.todo = todo
+            
+            saveTodo { [weak self] in
+                self?.presenter.didSave(todo: todo)
+            }
+        }
     }
 }
 
@@ -52,6 +58,15 @@ extension TodoDetailInteractor {
                     logger.error(message: error.debugMessage)
                     completion(nil)
             }
+        }
+    }
+    
+    func saveTodo(completion: @escaping () -> Void) {
+        coreDataStack.saveTodo(todo.todo) { error in
+            if let error {
+                return logger.error(message: error.debugMessage)
+            }
+            completion()
         }
     }
 }

@@ -7,9 +7,10 @@
 
 import Foundation
 import UIKit
+import EMCore
 
 class TodoListViewController: UIViewController {
-    var presenter: TodoListPresenterViewProtocol!
+    var presenter: (TodoListPresenterViewProtocol & TodoDetailModuleDelegate)!
     let configurator: TodoListConfiguratorProtocol = TodoListConfigurator()
     
     private let tableView = UITableView()
@@ -69,6 +70,15 @@ extension TodoListViewController: TodoListViewProtocol {
         let indexPath = IndexPath(row: idx, section: 0)
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    func delete(todo: TodoTableCellEntity) {
+        guard let idx = todos.firstIndex(where: { $0.id == todo.id }) else { return }
+        let indexPath = IndexPath(row: idx, section: 0)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
 }

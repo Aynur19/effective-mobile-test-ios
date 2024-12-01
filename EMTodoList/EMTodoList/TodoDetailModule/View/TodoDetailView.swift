@@ -9,7 +9,7 @@ import UIKit
 
 class TodoDetailViewController: UIViewController {
     private var presenter: TodoDetailPresenterViewProtocol!
-    private var todoId: Int64!
+    private var todo: TodoDetailEntity!
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -24,7 +24,13 @@ class TodoDetailViewController: UIViewController {
         setupUI()
         setupConstraints()
         setipSubscriptions()
-        presenter.viewDidLoad(for: todoId)
+        presenter.viewDidLoad(for: todo.id)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        updateTodo()
+        presenter.viewWillDisappear(todo: todo)
+        super.viewWillDisappear(animated)
     }
     
     deinit {
@@ -54,7 +60,7 @@ class TodoDetailViewController: UIViewController {
     }()
     
     // MARK: Task Created On
-    private lazy var taskCreatedOnLabel: UILabel = {
+    private lazy var todoCreatedOnLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
@@ -64,7 +70,7 @@ class TodoDetailViewController: UIViewController {
         return label
     }()
     
-    private func taskCreatedOnAttributedText(_ text: String) -> NSMutableAttributedString {
+    private func todoCreatedOnAttributedText(_ text: String) -> NSMutableAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.12
 
@@ -77,7 +83,7 @@ class TodoDetailViewController: UIViewController {
     }
     
     // MARK: Task Description
-    private lazy var taskDescriptionTextView: UITextView = {
+    private lazy var todoDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textView.textColor = TodoDetailAssets.Colors.todoDescriptionFg.color
@@ -93,7 +99,7 @@ class TodoDetailViewController: UIViewController {
         return textView
     }()
     
-    private func taskDescriptionAttributedText(_ text: String) -> NSMutableAttributedString {
+    private func todoDescriptionAttributedText(_ text: String) -> NSMutableAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.15
         
@@ -112,7 +118,12 @@ class TodoDetailViewController: UIViewController {
 extension TodoDetailViewController: TodoDetailViewConfiguratorProtocol {
     func configure(todoId: Int64?, presenter: TodoDetailPresenterViewProtocol) {
         self.presenter = presenter
-        self.todoId = todoId ?? 0
+        
+        if let todoId {
+            todo = .getEmpty(for: todoId)
+        } else {
+            todo = .getNewEmpty()
+        }
     }
 }
 
@@ -133,11 +144,16 @@ extension TodoDetailViewController: TodoDetailViewPresenterProtocol {
         
         todoNameTextField.text = todo.name
         
-        let createdOnText = taskCreatedOnAttributedText(todo.createdOn.todoShortDate)
-        taskCreatedOnLabel.attributedText = createdOnText
+        let createdOnText = todoCreatedOnAttributedText(todo.createdOn.todoShortDate)
+        todoCreatedOnLabel.attributedText = createdOnText
         
-        let descriptionText = taskDescriptionAttributedText(todo.description)
-        taskDescriptionTextView.attributedText = descriptionText
+        let descriptionText = todoDescriptionAttributedText(todo.description)
+        todoDescriptionTextView.attributedText = descriptionText
+    }
+    
+    private func updateTodo() {
+        todo.name = todoNameTextField.text ?? ""
+        todo.description = todoDescriptionTextView.text
     }
 }
 
@@ -151,8 +167,8 @@ extension TodoDetailViewController {
         
         view.addSubview(stackView)
         stackView.addArrangedSubview(todoNameTextField)
-        stackView.addArrangedSubview(taskCreatedOnLabel)
-        stackView.addArrangedSubview(taskDescriptionTextView)
+        stackView.addArrangedSubview(todoCreatedOnLabel)
+        stackView.addArrangedSubview(todoDescriptionTextView)
     }
     
     private func setipSubscriptions() {
@@ -170,9 +186,9 @@ extension TodoDetailViewController {
     
     private func setupConstraints() {
         setupStackViewConstraints()
-        setupTaskNameTextFieldConstraints()
-        setupTaskCreatedOnLabelConstraints()
-        setupTaskDescriptionTextViewConstraints()
+        setupTodoNameTextFieldConstraints()
+        setupTodoCreatedOnLabelConstraints()
+        setupTodoDescriptionTextViewConstraints()
     }
     
     func setupStackViewConstraints() {
@@ -185,7 +201,7 @@ extension TodoDetailViewController {
         ])
     }
     
-    func setupTaskNameTextFieldConstraints() {
+    func setupTodoNameTextFieldConstraints() {
         NSLayoutConstraint.activate([
             todoNameTextField.topAnchor.constraint(equalTo: stackView.topAnchor),
             todoNameTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
@@ -194,19 +210,19 @@ extension TodoDetailViewController {
         ])
     }
     
-    func setupTaskCreatedOnLabelConstraints() {
+    func setupTodoCreatedOnLabelConstraints() {
         NSLayoutConstraint.activate([
-            taskCreatedOnLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            taskCreatedOnLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            taskCreatedOnLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            todoCreatedOnLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            todoCreatedOnLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            todoCreatedOnLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor),
         ])
     }
     
-    func setupTaskDescriptionTextViewConstraints() {
+    func setupTodoDescriptionTextViewConstraints() {
         NSLayoutConstraint.activate([
-            taskDescriptionTextView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            taskDescriptionTextView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            taskDescriptionTextView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            todoDescriptionTextView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            todoDescriptionTextView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            todoDescriptionTextView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
         ])
     }
     
@@ -219,10 +235,12 @@ extension TodoDetailViewController {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
 
         if !isKeyboardVisible {
-            UIView.animate(withDuration: 0.7) {
-                self.view.layoutIfNeeded()
-                self.stackView.setCustomSpacing(30, after: self.taskDescriptionTextView)
-                self.view.frame.size.height = self.view.frame.height - keyboardFrame.height
+            UIView.animate(withDuration: 0.7) { [weak self] in
+                guard let self else { return }
+                
+                view.layoutIfNeeded()
+                stackView.setCustomSpacing(30, after: todoDescriptionTextView)
+                view.frame.size.height = view.frame.height - keyboardFrame.height
             }
             
             isKeyboardVisible = true
@@ -231,10 +249,12 @@ extension TodoDetailViewController {
         
     @objc private func keyboardWillHide(notification: NSNotification) {
         if isKeyboardVisible {
-            UIView.animate(withDuration: 0.7) {
-                self.view.layoutIfNeeded()
-                self.stackView.setCustomSpacing(10, after: self.taskDescriptionTextView)
-                self.view.frame.size.height = UIScreen.main.bounds.height
+            UIView.animate(withDuration: 0.7) { [weak self] in
+                guard let self else { return }
+                
+                view.layoutIfNeeded()
+                stackView.setCustomSpacing(10, after: todoDescriptionTextView)
+                view.frame.size.height = UIScreen.main.bounds.height
             }
             isKeyboardVisible = false
         }

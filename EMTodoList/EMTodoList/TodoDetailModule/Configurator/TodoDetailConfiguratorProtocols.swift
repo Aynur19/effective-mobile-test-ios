@@ -8,5 +8,5 @@
 import Foundation
 
 protocol TodoDetailConfiguratorProtocol: AnyObject {
-    static func createModule(for todoId: Int64?) -> TodoDetailViewController
+    static func createModule(for todoId: Int64?, delegate: TodoDetailModuleDelegate) -> TodoDetailViewController
 }

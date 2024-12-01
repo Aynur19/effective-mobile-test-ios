@@ -38,6 +38,8 @@ extension TodoListPresenter: TodoListPresenterViewProtocol {
     func didSelectTodo(todoId: Int64) {
         router.navigateToTodoDetail(for: todoId)
     }
+    
+    
 }
     
 
@@ -48,5 +50,16 @@ extension TodoListPresenter: TodoListPresenterInteractorProtocol {
     
     func didUpdated(todo: TodoTableCellEntity) {
         view?.update(todo: todo)
+    }
+}
+
+
+extension TodoListPresenter: TodoDetailModuleDelegate {
+    func didDeleteTodo(_ todo: Todo) {
+        view?.delete(todo: .create(todo: todo))
+    }
+    
+    func didSaveTodo(_ todo: Todo) {
+        view?.update(todo: .create(todo: todo))
     }
 }
